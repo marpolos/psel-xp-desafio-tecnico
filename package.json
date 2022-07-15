@@ -1,5 +1,44 @@
 {
   "devDependencies": {
     "git-commit-msg-linter": "^4.1.3"
-  }
+  },
+  "name": "psel-xp-desafio-tecnico",
+  "description": "API investimento em ações *************\\u{1F469}\\u200D\\u{1F4BC} Tecnologias utilizadas:",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "ansi-styles": "^3.2.1",
+    "chalk": "^2.4.2",
+    "color-convert": "^1.9.3",
+    "color-name": "^1.1.3",
+    "cors": "^2.8.5",
+    "did-you-mean": "^0.0.1",
+    "dotenv": "^16.0.1",
+    "escape-string-regexp": "^1.0.5",
+    "express": "^4.18.1",
+    "has-flag": "^4.0.0",
+    "levenshtein": "^1.0.5",
+    "mysql2": "^2.3.3",
+    "supports-color": "^8.1.1",
+    "underscore": "^1.13.4"
+  },
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marpolos/psel-xp-desafio-tecnico.git"
+  },
+  "keywords": [
+    "xp",
+    "actions",
+    "psel",
+    "api"
+  ],
+  "author": "@marpolos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marpolos/psel-xp-desafio-tecnico/issues"
+  },
+  "homepage": "https://github.com/marpolos/psel-xp-desafio-tecnico#readme"
 }
