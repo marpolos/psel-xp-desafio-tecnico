@@ -26,6 +26,14 @@ Instruções de uso:
 *** COMANDOS ***
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
 
+************** :white_flower:Endpoints disponíveis:
+ - /ativos -> lista todos os ativos disponíveis
+ - /ativos/{id} -> retorna o ativo com aquele id
+ - /ativos/cliente/{id} -> retorna todos os ativos do cliente com esse id -> talvez essa url esteja confusa.
+ - /contas -> lista todas as contas cadastradas -> Isso deve ter uma autenticação para admin.
+ - /contas/{id} -> retorna a conta daquele cliente específico;
+- /contas/saque -> atualiza a conta com um saque;
+- /contas/deposito -> atualiza a conta com um deposito;
 
 **********************:four_leaf_clover:
 Desafios
@@ -35,5 +43,6 @@ Desafios
 * Escolhi trabalhar com classes e typescript e é desafiador porque tem que tipar os retornos e ainda me confundo com os implements, extends e uso do as para retornos. Realmente quero desenvolver essas habilidades e estou me divertindo com o projeto porque estou treinando.
 * Criar controller em classe está sendo desafiador porque só vem undefined, então precisei usar funções para não ficar travada no projeto, mas o objetivo é refatorar assim que terminar de implementar as autenticações e testes.
 * Trabalhar com MSC é uma prática que deixa a aplicação mais robusta e segura porque em cada camada temos uma responsabilidade. No entando, eu fiquei um tempinho para resolver um problema de retorno porque estava olhando a model e só depois lembrei de olhar como estava no service. Eu estava tentando extends uma interface da outra, mas ficou confuso porque as duas possuem keys iguais para entidades diferentes. Por exemplo, id e name tanto na interface ativo, quanto na cliente.
-* Estava confundindo os modelos/contratos das entidades no código com o banco de dados em si, mas ao trabalhar consegui clarear minhas ideias e perceber que tenho a tabela intermediária justamente para ter a liberdade de mexer nas outras duas tabelas. 
+* Estava confundindo os modelos/contratos das entidades no código com o banco de dados em si, mas ao trabalhar consegui clarear minhas ideias e perceber que tenho a tabela intermediária justamente para ter a liberdade de mexer nas outras duas tabelas.
+* Tomei a liberdade de modificar as rotas e métodos http conforme meu entendimento atual do que me parece correto. No documento de FAQ do processo seletivo dizia que as toas eram sugestões e poderiam ser modificadas.
 

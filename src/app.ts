@@ -1,6 +1,6 @@
 import express from 'express';
-import contasRoutes from './routes/contas.routes';
 import cors from 'cors';
+import contasRoutes from './routes/contas.routes';
 import middleError from './middlewares/middleError';
 import ativosRoutes from './routes/ativos.routes';
 
