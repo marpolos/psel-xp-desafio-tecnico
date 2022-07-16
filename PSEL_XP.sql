@@ -51,4 +51,5 @@ INSERT INTO cliente_ativo
 (id_cliente, id_ativo, qtde, valor_ativo)
 VALUES
 (1, 6, 10, 2.86),
-(3, 1, 1, 98.63);
+(3, 1, 1, 98.63),
+(1, 1, 25, 98.63);

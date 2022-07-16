@@ -1,5 +1,10 @@
 import express from 'express';
+import AtivosController from '../controllers/ativos.controller';
 
-const routes = express.Router();
+// const ativosController = new AtivosController();
+const ativosRoutes = express.Router();
+ativosRoutes.get('/:id', AtivosController.getById);
+ativosRoutes.get('/', AtivosController.getAll);
+ativosRoutes.get('/cliente/:id', AtivosController.getByIdCliente);
 
-export default routes;
+export default ativosRoutes;
