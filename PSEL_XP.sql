@@ -16,14 +16,13 @@ CREATE TABLE `ativo`(
     CONSTRAINT PRIMARY KEY(id)
 );
 CREATE TABLE `cliente_ativo`(
-    `id` INT NOT NULL AUTO_INCREMENT,
     `id_cliente` INT NOT NULL,
     `id_ativo` INT NOT NULL,
     `qtde` INT NOT NULL,
     `valor_ativo` DECIMAL(8, 2) NOT NULL,
     `created` DATETIME DEFAULT NOW(),
     `updated` DATETIME DEFAULT NOW(),
-    CONSTRAINT PRIMARY KEY(id),
+    CONSTRAINT PRIMARY KEY(id_cliente, id_ativo),
     CONSTRAINT FOREIGN KEY(id_cliente) REFERENCES cliente(id),
     CONSTRAINT FOREIGN KEY(id_ativo) REFERENCES ativo(id) 
 );

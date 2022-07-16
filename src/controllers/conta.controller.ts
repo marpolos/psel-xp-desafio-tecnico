@@ -32,4 +32,17 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
   });
   return res.status(statusCode).json(data);
 }
-export default { getAll, getById };
+
+const atualizarConta = async (req: Request, res: Response, next: NextFunction) => {
+  const type: null | string = req.url === '/saque' ? null : 'deposito';
+  const { id, saldo } = req.body;
+
+  const { statusCode, data, message } = await ContaService
+  .atualizarConta(Number(id), Number(saldo), type);
+  if (message) return next({
+    statusCode,
+    message,
+  });
+  return res.status(statusCode).json(data);
+};
+export default { getAll, getById, atualizarConta };
