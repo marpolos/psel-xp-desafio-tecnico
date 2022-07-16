@@ -1,13 +1,16 @@
 API investimento em ações
-**************\u0033\uFE0F\u20E3\u0032\uFE0F\u20E3\u0031\uFE0F\u20E3
-*************\u{1F469}\u200D\u{1F4BC}
-Tecnologias utilizadas:
+:dizzy::dizzy::dizzy:**************:dizzy::dizzy::dizzy:
+
+![Investimento](https://media4.giphy.com/media/RLzvxHDMUoq092A5TV/giphy.gif?cid=ecf05e47hr61m06w4v527x6d2f9f50ih7ih4o7plr94byg50&rid=giphy.gif)
+
+Tecnologias utilizadas :question::
 
 * NodeJS -> para desenvolvimento de api(que é um lugar onde guardamos informação) escrita inicialmente em Typescrit como um desafio já que estou aprendendo e por ser tipado é um pouco mais complicado que sua base em javascrit;
 * MySQL -> tecnologia escolhida para manipular os dados de forma mais crua ao ser necessário escrever queries para comandar as ações no banco. Temos as ORM's (object-relational mapping) que facilitam a manipulação do banco de dados, por exemplo, o Sequelize que apresenta comandos para facilitar a vida, mas pessoalmente prefiro criar as queries eu mesma. Para mim é divertido e posso treinar.
 
-************* 😇
+************* 😇:notes:
 Módulos utilizados neste projeto:
+:seedling:
 * git-commit-msg-linter -> para commits descritivos (e atômicos);
 * Express -> biblioteca que facilita a criação de endpoints para api;
 * Cors -> facilita o uso da api pelo front-end;
@@ -16,7 +19,7 @@ Módulos utilizados neste projeto:
 * Eslint -> padronização de escrita do código.
 * ts-node -> utilizado para que seja possível que o projeto rode mesmo que em typescript.
 
-************* \u{1F64B}
+************* :exclamation:
 Instruções de uso:
 * Ao chegar nesse repositório faça o clone para uma pasta em sua máquina;
 * Abra o repositório localmente e pelo terminal digite o comando: npm install -> assim você instalará todas as dependências necessárias para o projeto funcionar;
@@ -24,6 +27,7 @@ Instruções de uso:
 * O banco já vem com algumas informações para teste. Rode o arquivo PSEL_XP.sql pelo workbench, se você o tiver em sua máquina, ou no próprio vscode através das extensões que manipulam bancos de dados, como o "database client". Como neste projeto não uso ORM, não temos um script para criar o banco. Pretendo futuramente criar um script para criar o banco direto pelo terminal atrvés de um script.
 
 *** COMANDOS ***
+:pray::pray::pray::pray:
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
 
 ************** :white_flower:Endpoints disponíveis:
