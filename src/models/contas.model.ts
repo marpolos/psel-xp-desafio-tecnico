@@ -4,22 +4,22 @@ import Cliente from '../classes/Cliente';
 
 export default class ContaModel {
   // Primeiro eu cria a connection do type poll e inicializo
-  public _connection: Pool;
+  public connection: Pool;
 
-  constructor(connection: Pool) {
-    this._connection = connection;
+  constructor(conn: Pool) {
+    this.connection = conn;
   }
 
   public async getAll(): Promise<Cliente[]> {
     const query = 'SELECT * FROM cliente';
-    const [clientes] = await this._connection.execute(query);
+    const [clientes] = await this.connection.execute(query);
     return clientes as Cliente[];
     // return rows.map((row) => new Cliente(row.id, row.nome, row.cpf, row.email, row.senha));
   }
 
   public async getById(id: number): Promise<Cliente> {
     const query = 'SELECT * FROM cliente WHERE id = ?';
-    const [rows] = await this._connection.execute(query, [id]);
+    const [rows] = await this.connection.execute(query, [id]);
     const [cliente] = rows as Cliente[];
     // retorna um {} porque é um [[]]
     // Decidi retirar os as Cliente para tratar tudo no service.
@@ -38,7 +38,7 @@ export default class ContaModel {
 
     // Se type vier preenchido então eu quero depositar na conta, somar.
     const newSaldo: number = type ? saldoInDB + saldo : saldoInDB - saldo; 
-    const [upConta] = await this._connection.execute<ResultSetHeader>(query, [newSaldo, id]);
+    const [upConta] = await this.connection.execute<ResultSetHeader>(query, [newSaldo, id]);
 
     if (upConta.affectedRows === 0) return {};
 
