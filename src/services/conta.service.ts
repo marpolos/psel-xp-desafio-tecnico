@@ -4,15 +4,15 @@ import connection from '../db/connection';
 import IService from '../interfaces/IService';
 
 class ContaService {
-  public _model: ContaModel;
+  public model: ContaModel;
 
   constructor() {
-    this._model = new ContaModel(connection);
+    this.model = new ContaModel(connection);
   }
 
   public async getAll(): Promise<IService<Cliente>> {
     // Criei um interface para meu retorno do service que gosto
-    const contas = await this._model.getAll();
+    const contas = await this.model.getAll();
     if (!contas) return { statusCode: 204, message: 'Nenhuma conta encontrada' };
 
     return {
@@ -22,7 +22,7 @@ class ContaService {
   }
 
   public async getById(id: number): Promise<IService<Cliente>> {
-    const conta = await this._model.getById(id);
+    const conta = await this.model.getById(id);
 
     if (!conta) return { statusCode: 404, message: 'Conta não encontrada' };
     return {
@@ -32,7 +32,7 @@ class ContaService {
   }
 
   public async atualizarConta(id: number, saldo: number, type: string | null) {
-    const cliente = await this._model.atualizarConta(Number(id), Number(saldo), type);
+    const cliente = await this.model.atualizarConta(Number(id), Number(saldo), type);
     // status 409 indica conflito
     if (!cliente) return { statusCode: 409, message: 'Problema ao atualizar saldo' };
 

@@ -6,10 +6,10 @@ import IService from '../interfaces/IService';
 export default class InvestimentosService {
   constructor(public investimentosModel = new InvestimentosModel(connection)) {}
 
-  public async venderAtivo(id_ativo: number, id_cliente: number, qtde: number):
+  public async venderAtivo(codAtivo: number, codCliente: number, qtde: number):
   Promise<IService<IAtivoCliente>> {
     const data = {
-      id_ativo, id_cliente, qtde,
+      codCliente, codAtivo, qtde,
     };
     const investimento = await this.investimentosModel.venderAtivo(data);
     if (!investimento) return { statusCode: 409, message: 'Problema ao vender ativo' };

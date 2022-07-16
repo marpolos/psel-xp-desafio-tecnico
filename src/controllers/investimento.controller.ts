@@ -24,9 +24,9 @@ const investimentosService = new InvestimentosService();
 export default InvestimentosController; */
 
 const venderAtivo = async (req: Request, res: Response, next: NextFunction) => {
-  const { id_ativo, id_cliente, qtde } = req.body;
+  const { codAtivo, codCliente, qtde } = req.body;
   const { statusCode, data, message } = await investimentosService
-    .venderAtivo(id_ativo, id_cliente, qtde);
+    .venderAtivo(codAtivo, codCliente, qtde);
 
   if (message) {
     return next({
