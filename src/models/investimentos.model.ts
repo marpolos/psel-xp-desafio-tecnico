@@ -36,6 +36,17 @@ export default class InvestimentoModel {
     return match;
   }
 
+  public async criarMatch(codCliente: number, codAtivo: number, qtde: number, valorAtivo: number) {
+    const query = 'INSERT INTO cliente_ativo (id_cliente, id_ativo, qtde, valor_ativo) VALUES (?, ?, ?, ?);';
+    const result = await this.connection
+      .execute<ResultSetHeader>(query, [codCliente, codAtivo, qtde, valorAtivo]);
+    const [dataInserted] = result;
+    if (dataInserted.affectedRows === 0) return { };
+    return {
+      codCliente, codAtivo, qtde, valorAtivo,
+    };
+  }
+
   // método para atualizar o match de ativo com cliente
   public async atualizarMatch(codCliente: number, codAtivo: number, qtde: number) {
     const query = 'UPDATE cliente_ativo SET qtde = ?, updated = ? WHERE id_cliente = ? AND id_ativo = ?;';
@@ -70,6 +81,55 @@ export default class InvestimentoModel {
     if (!atualizarCliente) return { message: 'Erro ao atualizar conta. ' };
 
     // Sexto, retornar novo match
+    const newRelation = await this.matchAtivoCliente(codCliente, codAtivo);
+    const {
+      id_cliente: codCli, id_ativo: codAt, qtde: newQ, valor_ativo: valorAtivo,
+    } = newRelation;
+    const dataTratado = {
+      codCliente: codCli,
+      codAtivo: codAt,
+      qtde: newQ,
+      valorAtivo,
+    };
+    return dataTratado as IAtivoCliente;
+  }
+
+  public async comprarAtivo(data: IAtivoCliente): Promise<IAtivoCliente | IMessage> {
+    const { codAtivo, codCliente, qtde } = data;
+    // Primeiro, verificar se a qtde para comprar é <= a qtde do ativo
+    const ativo = await this.ativosModel.getById(codAtivo);
+    if (!ativo) return { message: 'Ativo não encontrado.' };
+    const qtdeAtivo = Number(ativo.qtde);
+    if (qtde > qtdeAtivo) return { message: 'Quantidade de ativo maior que a disponível.' };
+
+    // Segundo, Verificar se o cliente tem o saldo para comprar o ativo
+    const saldoCliente = await this.contaModel.getById(codCliente);
+    if (!saldoCliente) return { message: 'Cliente não encontrado.' };
+    const saldo = Number(saldoCliente.saldo);
+    if (saldo < qtde * Number(ativo.valor)) return { message: 'Cliente não tem saldo para comprar o ativo.' };
+
+    // Terceiro, atualizar saldo cliente
+    const saque: number = qtde * Number(ativo.valor);
+    // Aqui passo null como type porque quero sacar da conta para comprar o ativo
+    const atualizarCliente = await this.contaModel.atualizarConta(codCliente, saque, null);
+    if (!atualizarCliente) return { message: 'Erro ao atualizar conta. ' };
+    
+    // Quarto, verifica se o cliente já tem esse ativo, se não, cria um novo
+    const isMatch = await this.matchAtivoCliente(codCliente, codAtivo);
+    if (!isMatch) {
+      const newMatch = await this.criarMatch(codCliente, codAtivo, qtde, ativo.valor);
+      if (!newMatch) return { message: 'Erro ao criar match.' };
+    }
+    // Quinto, atualizar o match se ele já existe
+    if (isMatch) {
+      const upMatch = await this.atualizarMatch(codCliente, codAtivo, Number(isMatch.qtde) + qtde);
+      if (!upMatch) return { message: 'Erro ao atualizar match.' };
+    }
+    // Sexto, atualiza a tabela de ativo
+    const atualizarAtivo = await this.ativosModel.atualizarAtivo(codAtivo, qtde, 'comprar');
+    if (!atualizarAtivo) return { message: 'Erro ao atualizar ativo. ' };
+
+    // Sétimo, retorna novo match
     const newRelation = await this.matchAtivoCliente(codCliente, codAtivo);
     const {
       id_cliente: codCli, id_ativo: codAt, qtde: newQ, valor_ativo: valorAtivo,
