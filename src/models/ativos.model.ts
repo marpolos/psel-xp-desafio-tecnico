@@ -4,6 +4,7 @@ import IAtivoCliente from '../interfaces/IAtivoCliente';
 
 export default class AtivosModel {
   _connection: Pool;
+
   constructor(connection: Pool) {
     this._connection = connection;
   }
@@ -25,8 +26,12 @@ export default class AtivosModel {
     const query = 'SELECT * FROM cliente_ativo WHERE id_cliente = ?';
     const [rows] = await this._connection.execute(query, [id]);
     const ativos = Object.values(rows).map((row) => {
-      const { id_cliente, id_ativo, qtde, valor_ativo } = row;
-      return { id_cliente, id_ativo, qtde, valor_ativo } as IAtivoCliente;
+      const {
+        id_cliente, id_ativo, qtde, valor_ativo, 
+      } = row;
+      return {
+        id_cliente, id_ativo, qtde, valor_ativo, 
+      } as IAtivoCliente;
     });
     return ativos as IAtivoCliente[];
   }

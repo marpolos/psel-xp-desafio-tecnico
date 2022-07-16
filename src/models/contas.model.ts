@@ -5,6 +5,7 @@ import Cliente from '../classes/Cliente';
 export default class ContaModel {
   // Primeiro eu cria a connection do type poll e inicializo
   public _connection: Pool;
+
   constructor(connection: Pool) {
     this._connection = connection;
   }
@@ -25,14 +26,15 @@ export default class ContaModel {
     return cliente;
   }
 
-  public async atualizarConta(id: number, saldo: number, type: string | null){
+  public async atualizarConta(id: number, saldo: number, type: string | null) {
     const query = 'UPDATE cliente SET saldo=? WHERE id=?';
 
     const cliente = await this.getById(id);
-    if (!cliente) return {}/* throw new HttpException(404, 'Cliente não encontrado'); */
+    if (!cliente) return {};/* throw new HttpException(404, 'Cliente não encontrado'); */
 
     const saldoInDB = Number(cliente.saldo);
-    if(!type && saldoInDB < saldo) return {}/* throw new HttpException(400, 'Saldo insuficiente'); */
+    if (!type && saldoInDB < saldo) return {};
+    /* throw new HttpException(400, 'Saldo insuficiente'); */
 
     // Se type vier preenchido então eu quero depositar na conta, somar.
     const newSaldo: number = type ? saldoInDB + saldo : saldoInDB - saldo; 
@@ -43,5 +45,4 @@ export default class ContaModel {
     const newConta = await this.getById(id); 
     return newConta;
   }
-
 }

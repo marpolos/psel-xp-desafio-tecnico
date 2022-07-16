@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import ContaService from '../services/conta.service'
+import ContaService from '../services/conta.service';
 
 /* class ContaController {
   constructor(public _contaService = new ContaService()) {}
@@ -21,28 +21,32 @@ export default new ContaController(); */
 const getAll = async (req: Request, res: Response) => {
   const { statusCode, data } = await ContaService.getAll();
   return res.status(statusCode).json(data);
-}
+};
 
 const getById = async (req: Request, res: Response, next: NextFunction) => {
   const { id } = req.params;
   const { statusCode, data, message } = await ContaService.getById(Number(id));
-  if (message) return next({
-    statusCode,
-    message,
-  });
+  if (message) {
+    return next({
+      statusCode,
+      message,
+    });
+  }
   return res.status(statusCode).json(data);
-}
+};
 
 const atualizarConta = async (req: Request, res: Response, next: NextFunction) => {
   const type: null | string = req.url === '/saque' ? null : 'deposito';
   const { id, saldo } = req.body;
 
   const { statusCode, data, message } = await ContaService
-  .atualizarConta(Number(id), Number(saldo), type);
-  if (message) return next({
-    statusCode,
-    message,
-  });
+    .atualizarConta(Number(id), Number(saldo), type);
+  if (message) {
+    return next({
+      statusCode,
+      message,
+    });
+  }
   return res.status(statusCode).json(data);
 };
 export default { getAll, getById, atualizarConta };

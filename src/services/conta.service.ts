@@ -1,11 +1,12 @@
-import ContaModel from "../models/contas.model";
-import Cliente from "../classes/Cliente";
-import connection from "../db/connection";
-import IService from "../interfaces/IService";
+import ContaModel from '../models/contas.model';
+import Cliente from '../classes/Cliente';
+import connection from '../db/connection';
+import IService from '../interfaces/IService';
 
 class ContaService {
   public _model: ContaModel;
-  constructor(){
+
+  constructor() {
     this._model = new ContaModel(connection);
   }
 
@@ -15,29 +16,29 @@ class ContaService {
     if (!contas) return { statusCode: 204, message: 'Nenhuma conta encontrada' };
 
     return {
-        statusCode: 200,
-        data: contas as Cliente[],
+      statusCode: 200,
+      data: contas as Cliente[],
     };
-  };
+  }
 
   public async getById(id: number): Promise<IService<Cliente>> {
     const conta = await this._model.getById(id);
 
-    if(!conta) return { statusCode: 404, message: 'Conta não encontrada' };
+    if (!conta) return { statusCode: 404, message: 'Conta não encontrada' };
     return {
-        statusCode: 200,
-        data: conta as Cliente,
+      statusCode: 200,
+      data: conta as Cliente,
     };
   }
 
-  public async atualizarConta(id: number, saldo: number, type: string | null){
+  public async atualizarConta(id: number, saldo: number, type: string | null) {
     const cliente = await this._model.atualizarConta(Number(id), Number(saldo), type);
     // status 409 indica conflito
     if (!cliente) return { statusCode: 409, message: 'Problema ao atualizar saldo' };
 
     return {
-        statusCode: 200,
-        data: cliente as Cliente,
+      statusCode: 200,
+      data: cliente as Cliente,
     };
   }
 }
