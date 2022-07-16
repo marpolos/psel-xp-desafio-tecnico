@@ -7,6 +7,13 @@ export interface IMessage {
   message: string;
 }
 
+export interface IDBReturnMatch {
+  id_cliente: number;
+  id_ativo: number;
+  qtde: number;
+  valor_ativo: number;
+}
+
 export default class InvestimentoModel {
   public connection: Pool;
 
@@ -21,10 +28,11 @@ export default class InvestimentoModel {
   }
 
   // método para facilitar a busca de matches cliente - ativo
-  public async matchAtivoCliente(codCliente: number, codAtivo: number): Promise<IAtivoCliente> {
+  public async matchAtivoCliente(codCliente: number, codAtivo: number): Promise<IDBReturnMatch> {
     const query = 'SELECT * FROM cliente_ativo WHERE id_cliente = ? AND id_ativo = ?;';
     const [rows] = await this.connection.execute(query, [codCliente, codAtivo]);
-    const [match] = rows as IAtivoCliente[];
+    const [match] = rows as IDBReturnMatch[];
+
     return match;
   }
 
@@ -35,7 +43,7 @@ export default class InvestimentoModel {
       .execute<ResultSetHeader>(query, [qtde, new Date(), codCliente, codAtivo]);
     if (upRelation.affectedRows === 0) return { };
     const newRelation = await this.matchAtivoCliente(codCliente, codAtivo);
-    return newRelation as IAtivoCliente;
+    return newRelation;
   }
 
   public async venderAtivo(data: IAtivoCliente): Promise<IAtivoCliente | IMessage> {
@@ -57,12 +65,21 @@ export default class InvestimentoModel {
     if (!atualizarAtivo) return { message: 'Erro ao atualizar ativo. ' };
     
     // Quinto, atualizar o saldo do  cliente
-    const deposito: number = qtde * Number(isMatch.valorAtivo);
+    const deposito: number = qtde * Number(isMatch.valor_ativo);
     const atualizarCliente = await this.contaModel.atualizarConta(codCliente, deposito, 'depositar');
     if (!atualizarCliente) return { message: 'Erro ao atualizar conta. ' };
 
     // Sexto, retornar novo match
     const newRelation = await this.matchAtivoCliente(codCliente, codAtivo);
-    return newRelation as IAtivoCliente;
+    const {
+      id_cliente: codCli, id_ativo: codAt, qtde: newQ, valor_ativo: valorAtivo,
+    } = newRelation;
+    const dataTratado = {
+      codCliente: codCli,
+      codAtivo: codAt,
+      qtde: newQ,
+      valorAtivo,
+    };
+    return dataTratado as IAtivoCliente;
   }
 }
