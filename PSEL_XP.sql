@@ -21,7 +21,8 @@ CREATE TABLE `cliente_ativo`(
     `id_ativo` INT NOT NULL,
     `qtde` INT NOT NULL,
     `valor_ativo` DECIMAL(8, 2) NOT NULL,
-    `data` DATETIME DEFAULT NOW(),
+    `created` DATETIME DEFAULT NOW(),
+    `updated` DATETIME DEFAULT NOW(),
     CONSTRAINT PRIMARY KEY(id),
     CONSTRAINT FOREIGN KEY(id_cliente) REFERENCES cliente(id),
     CONSTRAINT FOREIGN KEY(id_ativo) REFERENCES ativo(id) 
