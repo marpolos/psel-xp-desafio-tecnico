@@ -1,4 +1,4 @@
-import IAtivo from "../interfaces/IAtivo";
+import IAtivo from '../interfaces/IAtivo';
 
 export default class Ativo implements IAtivo {
   constructor(private _nome: string, private _valor: number,

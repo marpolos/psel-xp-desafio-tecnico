@@ -1,5 +1,6 @@
 import { Pool, ResultSetHeader } from 'mysql2/promise';
 import Ativo from '../classes/Ativo';
+import IAtivoCliente from '../interfaces/IAtivoCliente';
 
 export default class AtivosModel {
   _connection: Pool;
@@ -23,6 +24,10 @@ export default class AtivosModel {
   public async getByIdCliente(id: number) {
     const query = 'SELECT * FROM cliente_ativo WHERE id_cliente = ?';
     const [rows] = await this._connection.execute(query, [id]);
-    return rows;
+    const ativos = Object.values(rows).map((row) => {
+      const { id_cliente, id_ativo, qtde, valor_ativo } = row;
+      return { id_cliente, id_ativo, qtde, valor_ativo } as IAtivoCliente;
+    });
+    return ativos as IAtivoCliente[];
   }
 }

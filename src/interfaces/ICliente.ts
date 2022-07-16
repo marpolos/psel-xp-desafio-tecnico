@@ -1,4 +1,4 @@
-import Ativo from "../classes/Ativo";
+import Ativo from '../classes/Ativo';
 
 export default interface ICliente {
   id?: number;
