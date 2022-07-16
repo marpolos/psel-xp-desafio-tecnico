@@ -5,16 +5,16 @@ export default class Cliente implements ICliente {
   constructor(
     private _nome: string, 
     private _saldo: number,
-    private _id?: number, 
+    private _codCliente?: number, 
     private _ativos?: Ativo[],
   ) {}
 
-  public get id(): number | undefined {
-    return this._id;
+  public get codCliente(): number {
+    return this._codCliente;
   }
 
-  public set id(value: number | undefined) {
-    this._id = value;
+  public set codCliente(value: number) {
+    this._codCliente = value;
   }
 
   public get nome(): string {

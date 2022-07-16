@@ -1,6 +1,7 @@
 import { Pool, ResultSetHeader } from 'mysql2/promise';
 import IAtivoCliente from '../interfaces/IAtivoCliente';
 import AtivosModel from './ativos.model';
+import ContaModel from './contas.model';
 
 export interface IMessage {
   message: string;
@@ -11,49 +12,57 @@ export default class InvestimentoModel {
 
   public ativosModel: AtivosModel;
 
+  public contaModel: ContaModel;
+
   constructor(conn: Pool) {
     this.connection = conn;
     this.ativosModel = new AtivosModel(conn);
+    this.contaModel = new ContaModel(conn);
   }
 
-  /*  {
-    "id": 1,
-    "nome": "ZOOM",
-    "qtde": 850,
-    "valor": "98.63"
-  } */
+  // método para facilitar a busca de matches cliente - ativo
+  public async matchAtivoCliente(codCliente: number, codAtivo: number): Promise<IAtivoCliente> {
+    const query = 'SELECT * FROM cliente_ativo WHERE id_cliente = ? AND id_ativo = ?;';
+    const [rows] = await this.connection.execute(query, [codCliente, codAtivo]);
+    const [match] = rows as IAtivoCliente[];
+    return match;
+  }
 
-  // const data = id_ativo: number, id_cliente: number, qtde: number
+  // método para atualizar o match de ativo com cliente
+  public async atualizarMatch(codCliente: number, codAtivo: number, qtde: number) {
+    const query = 'UPDATE cliente_ativo SET qtde = ?, updated = ? WHERE id_cliente = ? AND id_ativo = ?;';
+    const [upRelation] = await this.connection
+      .execute<ResultSetHeader>(query, [qtde, new Date(), codCliente, codAtivo]);
+    if (upRelation.affectedRows === 0) return { };
+    const newRelation = await this.matchAtivoCliente(codCliente, codAtivo);
+    return newRelation as IAtivoCliente;
+  }
 
   public async venderAtivo(data: IAtivoCliente): Promise<IAtivoCliente | IMessage> {
-    const { id_ativo, id_cliente, qtde } = data;
-    const query = 'UPDATE cliente_ativo SET qtde = ?, updated = ? WHERE id_cliente = ? AND id_ativo = ?;';
+    const { codAtivo, codCliente, qtde } = data;
+    // Primeiro, verificar se o cliente está relacionado ao ativo
+    const isMatch = await this.matchAtivoCliente(codCliente, codAtivo);
+    if (!isMatch) return { message: 'Cliente não relacionado ao ativo.' };
 
-    // Primeiro, verificar se o ativo existe e se tem disponível para vender
-    const ativo = await this.ativosModel.getById(data.id_ativo);
-    const qtdeAtivoDB = ativo && Number(ativo.qtde);
-    if (!ativo || qtdeAtivoDB - data.qtde < 0) return { message: 'Ativo escasso. ' };
+    // Segundo, Verificar se o cliente tem a qtde de ativo para vender
+    const qtdeCliente = Number(isMatch.qtde) >= qtde;
+    if (!qtdeCliente) return { message: 'Cliente não tem a quantidade de ativo para vender.' };
 
-    // Segundo, verificar se o cliente está relacionado ao ativo
-    const relacionado = await this.ativosModel.getByIdCliente(id_cliente);
-    const ativoRelacionado = relacionado && relacionado
-      .find((ativoRel) => Number(ativoRel.id_ativo) === id_ativo);
-    if (!relacionado || !ativoRelacionado) return { message: 'Cliente não relacionado ao ativo.' };
+    // Terceiro, atualizar relação cliente-ativo
+    const upMatch = await this.atualizarMatch(codCliente, codAtivo, Number(isMatch.qtde) - qtde);
+    if (!upMatch) return { message: 'Erro ao atualizar match.' };
 
-    // Terceiro, atualizar o ativo
-    const atualizarAtivo = await this.ativosModel.atualizarAtivo(id_ativo, qtde, 'vender');
+    // Quarto, atualizar o ativo
+    const atualizarAtivo = await this.ativosModel.atualizarAtivo(codAtivo, qtde, 'vender');
     if (!atualizarAtivo) return { message: 'Erro ao atualizar ativo. ' };
+    
+    // Quinto, atualizar o saldo do  cliente
+    const deposito: number = qtde * Number(isMatch.valorAtivo);
+    const atualizarCliente = await this.contaModel.atualizarConta(codCliente, deposito, 'depositar');
+    if (!atualizarCliente) return { message: 'Erro ao atualizar conta. ' };
 
-    // Quarto, atualizar relação cliente-ativo
-    const [upRelation] = await this.connection
-      .execute<ResultSetHeader>(query, [qtde, new Date(), id_cliente, id_ativo]);
-
-    if (upRelation.affectedRows === 0) return { message: 'Erro ao vender ativo ' };
-
-    // Quinto, retornar ativo atualizado
-    const newRelation = (await this.ativosModel.getByIdCliente(id_cliente))
-      .find((newAtivo) => newAtivo.id_ativo === id_ativo);
-
+    // Sexto, retornar novo match
+    const newRelation = await this.matchAtivoCliente(codCliente, codAtivo);
     return newRelation as IAtivoCliente;
   }
 }

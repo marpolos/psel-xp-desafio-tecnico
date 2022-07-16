@@ -32,6 +32,7 @@ export default class ContaModel {
     const cliente = await this.getById(id);
     if (!cliente) return {};/* throw new HttpException(404, 'Cliente não encontrado'); */
 
+    // type null significa que quero retirar da conta sacar
     const saldoInDB = Number(cliente.saldo);
     if (!type && saldoInDB < saldo) return {};
     /* throw new HttpException(400, 'Saldo insuficiente'); */

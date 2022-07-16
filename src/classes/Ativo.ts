@@ -5,15 +5,15 @@ export default class Ativo implements IAtivo {
     private _nome: string, 
     private _valor: number,
     private _qtde: number, 
-    private _id?: number,
+    private _codAtivo?: number,
   ) {}
   
-  public get id(): number | undefined {
-    return this._id;
+  public get codAtivo(): number | undefined {
+    return this._codAtivo;
   }
 
-  public set id(value: number | undefined) {
-    this._id = value;
+  public set codAtivo(value: number | undefined) {
+    this._codAtivo = value;
   }
 
   public get qtde(): number {

@@ -1,5 +1,5 @@
 export default interface IAtivo {
-  id?: number;
+  codAtivo?: number;
   nome: string;
   valor: number;
   qtde: number;

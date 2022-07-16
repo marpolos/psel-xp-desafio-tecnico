@@ -13,9 +13,7 @@ export default class InvestimentosService {
     };
     const investimento = await this.investimentosModel.venderAtivo(data);
     if (!investimento) return { statusCode: 409, message: 'Problema ao vender ativo' };
-    console.log("investir", investimento);
-    const { message } = investimento;
-    if (message) return { statusCode: 409, message };
+    // if (investimento.message) return { statusCode: 409, message };
     return {
       statusCode: 200,
       data: investimento as IAtivoCliente,

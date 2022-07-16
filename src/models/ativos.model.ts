@@ -27,10 +27,13 @@ export default class AtivosModel {
     const [rows] = await this.connection.execute(query, [id]);
     const ativos = Object.values(rows).map((row) => {
       const {
-        id_cliente, id_ativo, qtde, valor_ativo, 
+        id_cliente: codCliente, id_ativo: codAtivo, qtde, valor_ativo: valorAtivo, 
       } = row;
       return {
-        id_cliente, id_ativo, qtde, valor_ativo, 
+        codCliente,
+        codAtivo,
+        qtde,
+        valorAtivo, 
       } as IAtivoCliente;
     });
     return ativos as IAtivoCliente[];
@@ -46,7 +49,7 @@ export default class AtivosModel {
     const [upAtivo] = await this.connection
       .execute<ResultSetHeader>(
       query,
-      [type === 'vender' ? qtdeAtivoDB - qtde : qtdeAtivoDB + qtde, id],
+      [type === 'vender' ? qtdeAtivoDB + qtde : qtdeAtivoDB - qtde, id],
     );
       
     if (upAtivo.affectedRows === 0) return {};
