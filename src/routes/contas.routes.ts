@@ -4,7 +4,7 @@ import ContaController from '../controllers/conta.controller';
 // import ContaService from '../services/conta.service';
 const contasRoutes = express.Router();
 
-//const contaController = new ContaController();
+// const contaController = new ContaController();
 
 contasRoutes.get('/:id', ContaController.getById);
 contasRoutes.get('/', ContaController.getAll);

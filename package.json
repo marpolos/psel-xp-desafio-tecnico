@@ -6,7 +6,10 @@
     "@typescript-eslint/eslint-plugin": "^5.30.6",
     "@typescript-eslint/parser": "^5.30.6",
     "eslint": "^8.19.0",
-    "eslint-config-trybe-backend": "^1.0.4",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-airbnb-typescript": "15.0.0",
+    "eslint-plugin-editorconfig": "3.2.0",
+    "eslint-plugin-import": "2.25.3",
     "git-commit-msg-linter": "^4.1.3",
     "nodemon": "^2.0.19",
     "ts-node": "^10.9.1",
@@ -35,7 +38,8 @@
   "scripts": {
     "test": "npm run test",
     "start": "ts-node .src/index.js",
-    "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --exec ts-node src/index.ts"
+    "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --exec ts-node src/index.ts",
+    "lint": "eslint. --ext .ts"
   },
   "repository": {
     "type": "git",

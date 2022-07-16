@@ -15,10 +15,7 @@ export default class AtivosModel {
 
   public async getById(id: number): Promise<Ativo> {
     const query = 'SELECT * FROM ativo WHERE id = ?';
-  
-    console.log(query);
     const [rows] = await this._connection.execute(query, [id]);
-    console.log(rows)
     const [ativo] = rows as Ativo[];
     return ativo as Ativo;
   }
