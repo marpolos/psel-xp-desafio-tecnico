@@ -37,4 +37,18 @@ const venderAtivo = async (req: Request, res: Response, next: NextFunction) => {
   return res.status(statusCode).json(data);
 };
 
-export default { venderAtivo };
+const comprarAtivo = async (req: Request, res: Response, next: NextFunction) => {
+  const { codAtivo, codCliente, qtde } = req.body;
+  const { statusCode, data, message } = await investimentosService
+    .comprarAtivo(codAtivo, codCliente, qtde);
+
+  if (message) {
+    return next({
+      statusCode,
+      message,
+    });
+  }
+  return res.status(statusCode).json(data);
+};
+
+export default { venderAtivo, comprarAtivo };

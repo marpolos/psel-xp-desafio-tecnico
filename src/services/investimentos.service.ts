@@ -19,4 +19,15 @@ export default class InvestimentosService {
       data: investimento as IAtivoCliente,
     };
   }
+
+  public async comprarAtivo(codAtivo: number, codCliente: number, qtde: number):
+  Promise<IService<IAtivoCliente>> {
+    const data = { codAtivo, codCliente, qtde };
+    const investimento = await this.investimentosModel.comprarAtivo(data);
+    if (!investimento) return { statusCode: 409, message: 'Problema ao comprar ativo' };
+    return {
+      statusCode: 200,
+      data: investimento as IAtivoCliente,
+    };
+  }
 }

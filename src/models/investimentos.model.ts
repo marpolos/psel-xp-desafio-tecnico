@@ -2,10 +2,7 @@ import { Pool, ResultSetHeader } from 'mysql2/promise';
 import IAtivoCliente from '../interfaces/IAtivoCliente';
 import AtivosModel from './ativos.model';
 import ContaModel from './contas.model';
-
-export interface IMessage {
-  message: string;
-}
+import IMessage from '../interfaces/IMessage';
 
 export interface IDBReturnMatch {
   id_cliente: number;
