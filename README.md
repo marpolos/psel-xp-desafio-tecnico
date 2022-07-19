@@ -34,17 +34,37 @@ Instruções de uso:
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
 
 ************** :white_flower:Endpoints disponíveis:
+TODAS AS ROTAS EXIGEM TOKEN, EXCETO PARA CRIAR O CLIENTE!
+
  - GET /ativos -> lista todos os ativos disponíveis
  - GET /ativos/{id} -> retorna o ativo com aquele id
  - GET /ativos/cliente/{id} -> retorna todos os ativos do cliente com esse id -> talvez essa url esteja confusa.
  - GET /contas -> lista todas as contas cadastradas -> Isso deve ter uma autenticação para admin.
  - GET /contas/{id} -> retorna a conta daquele cliente específico;
 - PUT /contas/saque -> atualiza a conta com um saque;
+
+  { codCliente: number, valor: number }
+
 - PUT /contas/deposito -> atualiza a conta com um deposito;
+
+  { codCliente: number, valor: number }
+
 - POST /contas/ -> criar um novo cliente e retorna um token;
+  
+  { nome: string, senha: string, saldo: number }
+
 - POST /constas/login -> logar numa conta existente, retorna um token;
+
+  { nome: string, senha: string } -> precisa estar cadastrado;
+  Para teste use { nome: Sarah Maria, senha: 12345 }
+
 - PUT /investimentos/vender -> vende o ativo se tiver;
+
+  { codCliente: number, codAtivo: number, qtde: number }
+
 - PUT /investimentos/comprar -> compra ativos;
+  
+  { codCliente: number, codAtivo: number, qtde: number }
 
 **********************:four_leaf_clover:
 Desafios

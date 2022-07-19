@@ -35,7 +35,8 @@ VALUES
 ('Clarice Antunes', 8000, 'hj524'),
 ('Roberta Cristina', 1000, '452gh'),
 ('Sampaio Vidal', 3500, 'yhfgt'),
-('Rosario dos Anjos', 15000, 'kj789');
+('Rosario dos Anjos', 15000, 'kj789'),
+('Sarah Maria', 15800, '12345');
 
 INSERT INTO ativo
 (nome, qtde, valor)

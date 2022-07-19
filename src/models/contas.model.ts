@@ -13,14 +13,13 @@ export default class ContaModel {
   }
 
   public async getAll(): Promise<Cliente[]> {
-    const query = 'SELECT * FROM cliente';
+    const query = 'SELECT id, nome, saldo FROM cliente';
     const [clientes] = await this.connection.execute(query);
     return clientes as Cliente[];
-    // return rows.map((row) => new Cliente(row.id, row.nome, row.cpf, row.email, row.senha));
   }
 
   public async getById(id: number): Promise<Cliente> {
-    const query = 'SELECT * FROM cliente WHERE id = ?';
+    const query = 'SELECT id, nome, saldo FROM cliente WHERE id = ?';
     const [rows] = await this.connection.execute(query, [id]);
     const [cliente] = rows as Cliente[];
     // retorna um {} porque é um [[]]
