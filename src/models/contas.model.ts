@@ -1,6 +1,7 @@
 import { Pool, ResultSetHeader } from 'mysql2/promise';
 import Cliente from '../classes/Cliente';
-import { generateToken } from '../utils/createToken';
+import { HttpException } from '../middlewares/middleError';
+import { generateToken } from '../utils/jwt';
 // import { HttpException } from '../middlewares/middleError';
 
 export default class ContaModel {
@@ -48,12 +49,29 @@ export default class ContaModel {
     return newConta;
   }
 
-  public async createConta(cliente: Cliente): Promise<string> {
-    const query = 'INSERT INTO cliente (nome, saldo) VALUES (?, ?)';
-    const { nome, saldo } = cliente;
-    await this.connection.execute(query, [nome, saldo]);
+  public async createConta(cliente: Omit<Cliente, 'codCliente'>) {
+    const query = 'INSERT INTO cliente (nome, saldo, senha) VALUES (?, ?, ?)';
+    const { nome, saldo, senha } = cliente;
+    await this.connection.execute(query, [nome, saldo, senha]);
 
     const token = generateToken(cliente);
     return token;
+  }
+
+  public async loginConta(cliente: Omit<Cliente, 'codCliente'>) {
+    const { nome, senha } = cliente;
+    try {
+      const query = 'SELECT * FROM cliente WHERE nome = ? AND senha = ?';
+      const [clienteExiste] = await this.connection.execute(query, [nome, senha]);
+      const [find] = clienteExiste as Cliente[];
+      console.log(find);
+      console.log('cli', clienteExiste);
+      if (!find) return {};
+      
+      const token = generateToken(find);
+      return token;
+    } catch (err) {
+      throw new HttpException(404, 'Cliente não encontrado');
+    }
   }
 }

@@ -53,6 +53,16 @@ class ContaService {
       data: token,
     };
   }
+
+  public async loginConta(cliente: Omit<Cliente, 'codCliente'>) {
+    const token = await this.model.loginConta(cliente);
+    if (!token) return { statusCode: 404, message: 'Conta não encontrada' };
+
+    return {
+      statusCode: 200,
+      data: token,
+    };
+  }
 }
 
 export default new ContaService();

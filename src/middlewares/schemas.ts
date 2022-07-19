@@ -48,6 +48,10 @@ const schemaCreateCliente = Joi.object({
     'any.required': 'O nome do cliente é obrigatório',
     'string.min': 'O nome do cliente deve ter no mínimo 3 caracteres',
   }),
+  senha: Joi.string().min(5).required().messages({
+    'any.required': 'A senha do cliente é obrigatória',
+    'string.min': 'A senha do cliente deve ter no mínimo 5 caracteres',
+  }),
   saldo: Joi.number().min(1).required().messages({
     'any.required': 'O saldo do cliente é obrigatório',
     'number.min': 'O saldo do cliente deve ser maior que 0',
@@ -55,5 +59,5 @@ const schemaCreateCliente = Joi.object({
 });
 
 export {
-  schemaAtivos, schemaCliente, schemaInvestimentos, schemaCreateCliente
+  schemaAtivos, schemaCliente, schemaInvestimentos, schemaCreateCliente,
 };

@@ -6,6 +6,7 @@ CREATE TABLE `cliente`(
     `id` INT NOT NULL AUTO_INCREMENT,
     `nome` CHAR(255) NOT NULL,
     `saldo` DECIMAL(8, 2) NOT NULL,
+    `senha` CHAR(25) NOT NULL,
     CONSTRAINT PRIMARY KEY(id)
 );
 CREATE TABLE `ativo`(
@@ -28,13 +29,13 @@ CREATE TABLE `cliente_ativo`(
 );
 
 INSERT INTO `cliente`
-(nome, saldo)
+(nome, saldo, senha)
 VALUES
-('Marta Maria', 7000),
-('Clarice Antunes', 8000),
-('Roberta Cristina', 1000),
-('Sampaio Vidal', 3500),
-('Rosario dos Anjos', 15000);
+('Marta Maria', 7000, 'jhtgf'),
+('Clarice Antunes', 8000, 'hj524'),
+('Roberta Cristina', 1000, '452gh'),
+('Sampaio Vidal', 3500, 'yhfgt'),
+('Rosario dos Anjos', 15000, 'kj789');
 
 INSERT INTO ativo
 (nome, qtde, valor)

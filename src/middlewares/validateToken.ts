@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { HttpException } from './middleError';
-import { authenticateToken } from '../utils/createToken';
+import { authenticateToken } from '../utils/jwt';
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization;

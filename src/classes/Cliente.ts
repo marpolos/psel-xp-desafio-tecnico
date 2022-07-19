@@ -7,6 +7,7 @@ export default class Cliente implements ICliente {
     private _saldo: number,
     private _codCliente?: number, 
     private _ativos?: Ativo[],
+    private _senha?: string,
   ) {}
 
   public get codCliente(): number {
@@ -39,5 +40,13 @@ export default class Cliente implements ICliente {
 
   public set ativos(value: Ativo[] | undefined) {
     this._ativos = value;
+  }
+
+  public get senha(): string {
+    return this._senha;
+  }
+  
+  public set senha(value: string) {
+    this._senha = value;
   }
 }

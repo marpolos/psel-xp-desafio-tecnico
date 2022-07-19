@@ -5,4 +5,5 @@ export default interface ICliente {
   nome?: string;
   saldo: number;
   ativos?: Ativo[];
+  senha?: string;
 }

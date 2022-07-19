@@ -3,6 +3,9 @@ API investimento em ações
 
 ![Investimento](https://media4.giphy.com/media/RLzvxHDMUoq092A5TV/giphy.gif?cid=ecf05e47hr61m06w4v527x6d2f9f50ih7ih4o7plr94byg50&rid=giphy.gif)
 
+***Observações:
+* Os métodos utilizam nomes em português;
+
 Tecnologias utilizadas :question::
 
 * NodeJS -> para desenvolvimento de api(que é um lugar onde guardamos informação) escrita inicialmente em Typescrit como um desafio já que estou aprendendo e por ser tipado é um pouco mais complicado que sua base em javascrit;
@@ -31,15 +34,17 @@ Instruções de uso:
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
 
 ************** :white_flower:Endpoints disponíveis:
- - /ativos -> lista todos os ativos disponíveis
- - /ativos/{id} -> retorna o ativo com aquele id
- - /ativos/cliente/{id} -> retorna todos os ativos do cliente com esse id -> talvez essa url esteja confusa.
- - /contas -> lista todas as contas cadastradas -> Isso deve ter uma autenticação para admin.
- - /contas/{id} -> retorna a conta daquele cliente específico;
-- /contas/saque -> atualiza a conta com um saque;
-- /contas/deposito -> atualiza a conta com um deposito;
-- /investimentos/vender -> vende o ativo se tiver;
-- /investimentos/comprar -> compra ativos;
+ - GET /ativos -> lista todos os ativos disponíveis
+ - GET /ativos/{id} -> retorna o ativo com aquele id
+ - GET /ativos/cliente/{id} -> retorna todos os ativos do cliente com esse id -> talvez essa url esteja confusa.
+ - GET /contas -> lista todas as contas cadastradas -> Isso deve ter uma autenticação para admin.
+ - GET /contas/{id} -> retorna a conta daquele cliente específico;
+- PUT /contas/saque -> atualiza a conta com um saque;
+- PUT /contas/deposito -> atualiza a conta com um deposito;
+- POST /contas/ -> criar um novo cliente e retorna um token;
+- POST /constas/login -> logar numa conta existente, retorna um token;
+- PUT /investimentos/vender -> vende o ativo se tiver;
+- PUT /investimentos/comprar -> compra ativos;
 
 **********************:four_leaf_clover:
 Desafios
@@ -51,4 +56,9 @@ Desafios
 * Trabalhar com MSC é uma prática que deixa a aplicação mais robusta e segura porque em cada camada temos uma responsabilidade. No entando, eu fiquei um tempinho para resolver um problema de retorno porque estava olhando a model e só depois lembrei de olhar como estava no service. Eu estava tentando extends uma interface da outra, mas ficou confuso porque as duas possuem keys iguais para entidades diferentes. Por exemplo, id e name tanto na interface ativo, quanto na cliente.
 * Estava confundindo os modelos/contratos das entidades no código com o banco de dados em si, mas ao trabalhar consegui clarear minhas ideias e perceber que tenho a tabela intermediária justamente para ter a liberdade de mexer nas outras duas tabelas.
 * Tomei a liberdade de modificar as rotas e métodos http conforme meu entendimento atual do que me parece correto. No documento de FAQ do processo seletivo dizia que as toas eram sugestões e poderiam ser modificadas.
+* Quando criei os middlewares tive um problema para passá-los nas rotas, dava um conflito no typescript. O retorno do tipo Response nativo não aceitava o middleware. Sinceramente não entendi porque parece que ele só sumiu e começou a passar. Mudei a verdão do typescript para uma inferior, mas isso não adiantou. Daí achei esse link:
+https://wanago.io/2018/12/03/typescript-express-tutorial-routing-controllers-middleware/
+E coloquei o middleware no app.use(), depois disso ele começou a passar nos métodos get, post, put. Pelo que vi no stackOverflow o problema ocorre porque o type do express para rota não consegue ler strings, e a solução era tipar manualmente o response, fiz isso, mas não funcionou.
+O problema era esse:
+argument of type '{ validateinvestimentos: (req: request<paramsdictionary, any, any, querystring.parsedqs, record<string, any>>, _res: response<any, record<...>>, next: nextfunction) => void; }' is not assignable to parameter of type 'requesthandlerparams<paramsdictionary, any, any, parsedqs, record<string, any>>'.ts(2769)
 

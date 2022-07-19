@@ -64,6 +64,20 @@ Promise<Response | void> => {
   return res.status(statusCode).json({ token: data });
 };
 
+const loginConta = async (req: Request, res: Response, next: NextFunction):
+Promise<Response | void> => {
+  const { statusCode, data, message } = await ContaService.loginConta(req.body);
+
+  if (message) {
+    return next({
+      statusCode,
+      message,
+    });
+  }
+
+  return res.status(statusCode).json({ token: data });
+};
+
 export default {
-  getAll, getById, atualizarConta, createConta,
+  getAll, getById, atualizarConta, createConta, loginConta,
 };
