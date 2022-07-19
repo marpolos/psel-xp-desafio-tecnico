@@ -2,7 +2,6 @@ import dotenv from 'dotenv';
 import {
   JwtPayload, sign, verify, SignOptions,
 } from 'jsonwebtoken';
-import { HttpException } from '../middlewares/middleError';
 import ICliente from '../interfaces/ICliente';
 
 dotenv.config();
@@ -16,16 +15,9 @@ const jwtConfig: SignOptions = {
 
 const generateToken = (cliente: Omit<ICliente, 'codCliente'>) => sign({ cliente }, JWT_SECRET!, jwtConfig);
 
-const authenticateToken = async (token: string | undefined): Promise<string | JwtPayload> => {
-  // O 401 diz que é não autorizado;
-  const message = 'token não encontrado ou inválido';
-  if (!token) throw new HttpException(401, message);
-  try {
-    const validate = await verify(token, JWT_SECRET!);
-    return validate;
-  } catch {
-    throw new HttpException(401, message);
-  }
+const authenticateToken = async (token: string): Promise<string | JwtPayload> => {
+  const validate = await verify(token, JWT_SECRET!);
+  return validate;
 };
 
 export { generateToken, authenticateToken };
