@@ -38,6 +38,8 @@ Instruções de uso:
  - /contas/{id} -> retorna a conta daquele cliente específico;
 - /contas/saque -> atualiza a conta com um saque;
 - /contas/deposito -> atualiza a conta com um deposito;
+- /investimentos/vender -> vende o ativo se tiver;
+- /investimentos/comprar -> compra ativos;
 
 **********************:four_leaf_clover:
 Desafios
