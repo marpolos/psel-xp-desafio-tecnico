@@ -1,6 +1,6 @@
 import express from 'express';
 import ContaController from '../controllers/conta.controller';
-import { validateCliente } from '../middlewares/validateSchemas';
+import { validateCliente, validateCriarConta } from '../middlewares/validateSchemas';
 // import { Request, Response, NextFunction } from 'express';
 // import ContaService from '../services/conta.service';
 const contasRoutes = express.Router();
@@ -12,6 +12,7 @@ contasRoutes.get('/', ContaController.getAll);
 // Aqui escolhi usar put porque estou fazendo update na conta já existente.
 contasRoutes.put('/saque', validateCliente, ContaController.atualizarConta);
 contasRoutes.put('/deposito', validateCliente, ContaController.atualizarConta);
+contasRoutes.post('/', validateCriarConta, ContaController.createConta);
 
 // const contaService = new ContaService();
 /* contasRoutes.get('/12', async (_req: Request, res: Response): Promise<Response> => {

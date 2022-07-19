@@ -41,6 +41,18 @@ class ContaService {
       data: cliente as Cliente,
     };
   }
+
+  public async createConta(cliente: Cliente): Promise<IService<string>> {
+    const token = await this.model.createConta(cliente);
+
+    // 409 porque houve algum conflito na criação da conta
+    if (!token) return { statusCode: 409, message: 'Problema ao criar conta' };
+
+    return {
+      statusCode: 201,
+      data: token,
+    };
+  }
 }
 
 export default new ContaService();

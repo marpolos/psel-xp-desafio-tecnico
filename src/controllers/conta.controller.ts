@@ -49,4 +49,21 @@ const atualizarConta = async (req: Request, res: Response, next: NextFunction) =
   }
   return res.status(statusCode).json(data);
 };
-export default { getAll, getById, atualizarConta };
+
+const createConta = async (req: Request, res: Response, next: NextFunction):
+Promise<Response | void> => {
+  const { statusCode, data, message } = await ContaService.createConta(req.body);
+
+  if (message) {
+    return next({
+      statusCode,
+      message,
+    });
+  }
+
+  return res.status(statusCode).json({ token: data });
+};
+
+export default {
+  getAll, getById, atualizarConta, createConta,
+};

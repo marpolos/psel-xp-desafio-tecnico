@@ -1,5 +1,6 @@
 import { Pool, ResultSetHeader } from 'mysql2/promise';
 import Cliente from '../classes/Cliente';
+import { generateToken } from '../utils/createToken';
 // import { HttpException } from '../middlewares/middleError';
 
 export default class ContaModel {
@@ -45,5 +46,14 @@ export default class ContaModel {
 
     const newConta = await this.getById(id); 
     return newConta;
+  }
+
+  public async createConta(cliente: Cliente): Promise<string> {
+    const query = 'INSERT INTO cliente (nome, saldo) VALUES (?, ?)';
+    const { nome, saldo } = cliente;
+    await this.connection.execute(query, [nome, saldo]);
+
+    const token = generateToken(cliente);
+    return token;
   }
 }
