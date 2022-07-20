@@ -6,8 +6,8 @@ API investimento em ações
 
 ***Observações:
 * Os métodos utilizam nomes em português;
-
-Tecnologias utilizadas :question::
+<details>
+<summary>Tecnologias utilizadas :question::</summary>
 
 * NodeJS -> para desenvolvimento de api(que é um lugar onde guardamos informação) escrita inicialmente em Typescrit como um desafio já que estou aprendendo e por ser tipado é um pouco mais complicado que sua base em javascrit;
 * MySQL -> tecnologia escolhida para manipular os dados de forma mais crua ao ser necessário escrever queries para comandar as ações no banco. Temos as ORM's (object-relational mapping) que facilitam a manipulação do banco de dados, por exemplo, o Sequelize que apresenta comandos para facilitar a vida, mas pessoalmente prefiro criar as queries eu mesma. Para mim é divertido e posso treinar.
@@ -22,7 +22,7 @@ Módulos utilizados neste projeto:
 * Dotenv -> necessário para conectar ao banco de dados de maneira mais segura, pois assim os dados do dono do banco não ficam expostos. Por esse motivo aqui nesse repositório contém um arquivo chamado .env.example que pode ser usado de modelo para escrita dos seus próprios dados no mysql e assim ter permissão de acesso. As chaves PORT, HOST e DATABASE podem ser mantidas.
 * Eslint -> padronização de escrita do código.
 * ts-node -> utilizado para que seja possível que o projeto rode mesmo que em typescript.
-
+</details>
 ************* :exclamation:
 Instruções de uso:
 * Ao chegar nesse repositório faça o clone para uma pasta em sua máquina;
@@ -35,7 +35,9 @@ Instruções de uso:
 :pray::pray::pray::pray:
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
 
-************** :white_flower:Endpoints disponíveis:
+************** :white_flower:
+<details>
+<summary>Endpoints disponíveis:</summary>
 TODAS AS ROTAS EXIGEM TOKEN, EXCETO PARA CRIAR O CLIENTE!
 
  - GET /ativos -> lista todos os ativos disponíveis
@@ -67,9 +69,11 @@ TODAS AS ROTAS EXIGEM TOKEN, EXCETO PARA CRIAR O CLIENTE!
 - PUT /investimentos/comprar -> compra ativos;
   
   { codCliente: number, codAtivo: number, qtde: number }
+  </details>
 
 **********************:four_leaf_clover:
-Desafios
+<details>
+<summary><strong>Desafios</strong></summary>
 * O planejamento leva tempo, mas ele é essencial porque poupa tempo a longo prazo;
   - Na imagem psel-xp.v1.png não tenho a modelagem do banco porque só lembrei na hora de codar;
   - O esquema do banco está na imagem dawSQL;
@@ -93,4 +97,11 @@ b7bde549b8cab4: username
 5810fabc: password
 us-cdbr-east-06.cleardb.net: host
 heroku_f7cd05b49b94cc6: database
+https://www.bezkoder.com/deploy-node-js-app-heroku-cleardb-mysql/
+
+Banco de dados: psel_xp_db_free
+Nome de usuário: marpolos
+Email: monteiro.bio@outlook.com
+db4free
+</details>
 

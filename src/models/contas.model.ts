@@ -64,6 +64,8 @@ export default class ContaModel {
       const query = 'SELECT * FROM cliente WHERE nome = ? AND senha = ?';
       const [clienteExiste] = await this.connection.execute(query, [nome, senha]);
       const [find] = clienteExiste as Cliente[];
+      console.log('cl', clienteExiste);
+      console.log('df', find);
 
       // Aqui eu retorno false para dar erro se não encontrar o cliente;
       if (!find) return false;
