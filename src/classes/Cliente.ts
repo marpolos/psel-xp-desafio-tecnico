@@ -10,11 +10,11 @@ export default class Cliente implements ICliente {
     private _senha?: string,
   ) {}
 
-  public get codCliente(): number {
+  public get codCliente(): number | undefined {
     return this._codCliente;
   }
 
-  public set codCliente(value: number) {
+  public set codCliente(value: number | undefined) {
     this._codCliente = value;
   }
 
@@ -42,11 +42,11 @@ export default class Cliente implements ICliente {
     this._ativos = value;
   }
 
-  public get senha(): string {
+  public get senha(): string | undefined {
     return this._senha;
   }
   
-  public set senha(value: string) {
+  public set senha(value: string | undefined) {
     this._senha = value;
   }
 }
