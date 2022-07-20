@@ -29,6 +29,7 @@ Instruções de uso:
 * Abra o repositório localmente e pelo terminal digite o comando: npm install -> assim você instalará todas as dependências necessárias para o projeto funcionar;
 * Vá no arquivo .env.example e renomeio para .env -> coloque suas informações pessoais para acessar o mysql;
 * O banco já vem com algumas informações para teste. Rode o arquivo PSEL_XP.sql pelo workbench, se você o tiver em sua máquina, ou no próprio vscode através das extensões que manipulam bancos de dados, como o "database client". Como neste projeto não uso ORM, não temos um script para criar o banco. Pretendo futuramente criar um script para criar o banco direto pelo terminal atrvés de um script.
+* Deploy: https://psel-xp.herokuapp.com/ -> ATENÇÃO: as rotas exigem token.
 
 *** COMANDOS ***
 :pray::pray::pray::pray:
@@ -82,4 +83,14 @@ https://wanago.io/2018/12/03/typescript-express-tutorial-routing-controllers-mid
 E coloquei o middleware no app.use(), depois disso ele começou a passar nos métodos get, post, put. Pelo que vi no stackOverflow o problema ocorre porque o type do express para rota não consegue ler strings, e a solução era tipar manualmente o response, fiz isso, mas não funcionou.
 O problema era esse:
 argument of type '{ validateinvestimentos: (req: request<paramsdictionary, any, any, querystring.parsedqs, record<string, any>>, _res: response<any, record<...>>, next: nextfunction) => void; }' is not assignable to parameter of type 'requesthandlerparams<paramsdictionary, any, any, parsedqs, record<string, any>>'.ts(2769)
+* Fazer o deploy no heroku foi desafiador porque estava dando App crashed. Testei n versões no Profile do heroku, mas nada deu certo. Eu desisti, mas pensei que desistir não é opção. A solução era uma variável de ambiente que precisei mudar para false.
+A solução achei aqui: https://dev.to/rosyshrestha/deploy-nestjs-typescript-app-to-heroku-27e
+E cheguei ali através daqui: https://stackoverflow.com/questions/69592313/herokurouter-at-error-code-h10-desc-app-crashed-method-get-path-error
+O heroku tem uma variável que é setada como default true e faz com que ele só instale dependências, e não as dev. NPM_CONFIG_PRODUCTION. Para mim realmente faz sentido porque devDependency servem para os devs, e não os users.
+* ClearDB:  mysql://b7bde549b8cab4:5810fabc@us-cdbr-east-06.cleardb.net/heroku_f7cd05b49b94cc6?reconnect=true
+
+b7bde549b8cab4: username
+5810fabc: password
+us-cdbr-east-06.cleardb.net: host
+heroku_f7cd05b49b94cc6: database
 
