@@ -1,4 +1,4 @@
-import sinon from 'sinon';
+/* import sinon from 'sinon';
 import { expect } from 'chai';
 import connection from '../../db/connection';
 import ContaModel from '../../models/contas.model';
@@ -21,4 +21,4 @@ describe('GET contas/{id}', () => {
   });
   test('Quando passa um id inválido retorna um objeto vazio', () => {
   });
-});
+}); */
