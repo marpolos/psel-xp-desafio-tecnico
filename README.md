@@ -55,7 +55,7 @@ TODAS AS ROTAS EXIGEM TOKEN, EXCETO PARA CRIAR O CLIENTE!
   
   { nome: string, senha: string, saldo: number }
 
-- POST /constas/login -> logar numa conta existente, retorna um token;
+- POST /contas/login -> logar numa conta existente, retorna um token;
 
   { nome: string, senha: string } -> precisa estar cadastrado;
   Para teste use { nome: Sarah Maria, senha: 12345 }
