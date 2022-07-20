@@ -1,5 +1,5 @@
 import express from 'express';
-import InvestimentosController from '../controllers/investimento.controller';
+import InvestimentosController from '../controllers/investimentos.controller';
 
 const investimentoRoutes = express.Router();
 

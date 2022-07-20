@@ -1,5 +1,5 @@
 import express from 'express';
-import ContaController from '../controllers/conta.controller';
+import ContaController from '../controllers/contas.controller';
 import { validateCliente, validateCriarConta } from '../middlewares/validateSchemas';
 import validateToken from '../middlewares/validateToken';
 // import { Request, Response, NextFunction } from 'express';

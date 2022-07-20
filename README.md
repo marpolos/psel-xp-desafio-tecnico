@@ -1,4 +1,5 @@
 API investimento em ações
+🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟
 :dizzy::dizzy::dizzy:**************:dizzy::dizzy::dizzy:
 
 ![Investimento](https://media4.giphy.com/media/RLzvxHDMUoq092A5TV/giphy.gif?cid=ecf05e47hr61m06w4v527x6d2f9f50ih7ih4o7plr94byg50&rid=giphy.gif)

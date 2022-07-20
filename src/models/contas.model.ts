@@ -59,13 +59,14 @@ export default class ContaModel {
 
   public async loginConta(cliente: Omit<Cliente, 'codCliente'>) {
     const { nome, senha } = cliente;
+    // Usei essa fonte para me ajudar: https://dev.to/vitordelfino/autenticacao-com-jwt-22o7
     try {
       const query = 'SELECT * FROM cliente WHERE nome = ? AND senha = ?';
       const [clienteExiste] = await this.connection.execute(query, [nome, senha]);
       const [find] = clienteExiste as Cliente[];
-      console.log(find);
-      console.log('cli', clienteExiste);
-      if (!find) return {};
+
+      // Aqui eu retorno false para dar erro se não encontrar o cliente;
+      if (!find) return false;
       
       const token = generateToken(find);
       return token;

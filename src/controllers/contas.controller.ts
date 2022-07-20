@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import ContaService from '../services/conta.service';
+import ContaService from '../services/contas.service';
 
 /* class ContaController {
   constructor(public _contaService = new ContaService()) {}
