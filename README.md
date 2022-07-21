@@ -37,6 +37,7 @@ Instruções de uso:
 </br>
 *** COMANDOS ***
 :pray::pray::pray::pray:
+</br>
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
 
 ************** :white_flower:
