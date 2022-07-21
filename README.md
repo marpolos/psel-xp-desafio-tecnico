@@ -23,14 +23,18 @@ Módulos utilizados neste projeto:
 * Eslint -> padronização de escrita do código.
 * ts-node -> utilizado para que seja possível que o projeto rode mesmo que em typescript.
 </details>
+
 ************* :exclamation:
+</br>
 Instruções de uso:
+</br>
 * Ao chegar nesse repositório faça o clone para uma pasta em sua máquina;
 * Abra o repositório localmente e pelo terminal digite o comando: npm install -> assim você instalará todas as dependências necessárias para o projeto funcionar;
 * Vá no arquivo .env.example e renomeio para .env -> coloque suas informações pessoais para acessar o mysql;
 * O banco já vem com algumas informações para teste. Rode o arquivo PSEL_XP.sql pelo workbench, se você o tiver em sua máquina, ou no próprio vscode através das extensões que manipulam bancos de dados, como o "database client". Como neste projeto não uso ORM, não temos um script para criar o banco. Pretendo futuramente criar um script para criar o banco direto pelo terminal atrvés de um script.
 * Deploy: https://psel-xp.herokuapp.com/ -> ATENÇÃO: as rotas exigem token.
 
+</br>
 *** COMANDOS ***
 :pray::pray::pray::pray:
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
