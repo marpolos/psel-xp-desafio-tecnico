@@ -67,6 +67,7 @@ TODAS AS ROTAS EXIGEM TOKEN, EXCETO PARA CRIAR O CLIENTE!
   { nome: string, senha: string } -> precisa estar cadastrado;
   Para teste use { nome: Sarah Maria, senha: 12345 }
 
+- GET /investimentos -> lista todos os investimentos dessa corretora;
 - PUT /investimentos/vender -> vende o ativo se tiver;
 
   { codCliente: number, codAtivo: number, qtde: number }
@@ -97,6 +98,7 @@ A solução achei aqui: https://dev.to/rosyshrestha/deploy-nestjs-typescript-app
 E cheguei ali através daqui: https://stackoverflow.com/questions/69592313/herokurouter-at-error-code-h10-desc-app-crashed-method-get-path-error
 O heroku tem uma variável que é setada como default true e faz com que ele só instale dependências, e não as dev. NPM_CONFIG_PRODUCTION. Para mim realmente faz sentido porque devDependency servem para os devs, e não os users.
 * ClearDB:  mysql://b7bde549b8cab4:5810fabc@us-cdbr-east-06.cleardb.net/heroku_f7cd05b49b94cc6?reconnect=true
+* Passei um dia inteiro para subir o banco de dados, motivo: HOST/HOSTNAME -> escrita e eu não percebi porque estava muito ansiosa.
 
 b7bde549b8cab4: username
 5810fabc: password

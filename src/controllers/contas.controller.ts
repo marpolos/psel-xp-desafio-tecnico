@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { AtualizarConta } from '../interfaces/typeAtualizarConta';
 import ContaService from '../services/contas.service';
 
 /* class ContaController {
@@ -36,11 +37,11 @@ const getById = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const atualizarConta = async (req: Request, res: Response, next: NextFunction) => {
-  const type: null | string = req.url === '/saque' ? null : 'deposito';
-  const { id, saldo } = req.body;
+  const type: AtualizarConta = req.url === '/saque' ? 'sacar' : 'depositar';
+  const { codCliente, saldo } = req.body;
 
   const { statusCode, data, message } = await ContaService
-    .atualizarConta(Number(id), Number(saldo), type);
+    .atualizarConta(Number(codCliente), Number(saldo), type);
   if (message) {
     return next({
       statusCode,

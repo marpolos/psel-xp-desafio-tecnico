@@ -30,4 +30,13 @@ export default class InvestimentosService {
       data: investimento as IAtivoCliente,
     };
   }
+
+  public async listaInvestimentos(): Promise<IService<IAtivoCliente[]>> {
+    const investimentos = await this.investimentosModel.listaInvestimentos();
+    if (investimentos.length === 0) return { statusCode: 204, message: 'Nenhum investimento realizado na corretora.' };
+    return {
+      statusCode: 200,
+      data: investimentos as IAtivoCliente[],
+    };
+  }
 }
