@@ -17,9 +17,9 @@ app.use(express.json());
 
 app.use('/contas', contasRoutes);
 
-app.use('/ativos', validateAtivos, ativosRoutes);
+app.use('/ativos', validateToken, validateAtivos, ativosRoutes);
 
-app.use('/investimentos', validateInvestimentos, investimentosRoutes);
+app.use('/investimentos', validateToken, validateInvestimentos, investimentosRoutes);
 
 // Aqui vai o middle de erro para qualquer problema;
 app.use(middleError);
