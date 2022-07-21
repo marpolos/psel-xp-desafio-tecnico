@@ -28,53 +28,75 @@ Módulos utilizados neste projeto:
 </br>
 Instruções de uso:
 </br>
-* Ao chegar nesse repositório faça o clone para uma pasta em sua máquina;
-* Abra o repositório localmente e pelo terminal digite o comando: npm install -> assim você instalará todas as dependências necessárias para o projeto funcionar;
+
+* Ao chegar nesse repositório faça o clone para uma pasta em sua máquina -> git clone <link>
+
+* Abra o repositório localmente e instale as dependências: npm install -> assim você instalará todas as dependências necessárias para o projeto funcionar;
+
 * Vá no arquivo .env.example e renomeio para .env -> coloque suas informações pessoais para acessar o mysql;
-* O banco já vem com algumas informações para teste. Rode o arquivo PSEL_XP.sql pelo workbench, se você o tiver em sua máquina, ou no próprio vscode através das extensões que manipulam bancos de dados, como o "database client". Como neste projeto não uso ORM, não temos um script para criar o banco. Pretendo futuramente criar um script para criar o banco direto pelo terminal atrvés de um script.
-* Deploy: https://psel-xp.herokuapp.com/ -> ATENÇÃO: as rotas exigem token.
+
+* O banco já vem com algumas informações para teste. Rode o arquivo PSEL_XP.sql pelo workbench, se você o tiver em sua máquina, ou no próprio vscode através das extensões que manipulam bancos de dados, como o "database client". Infelizmente ainda não criei um script para facilitar essa etapa.
+
+* Se não quiser o trabalho de clonar o projeto, entre no deploy e utilize normalmente, porém sem acesso ao código. Deploy: https://psel-xp.herokuapp.com/ -> ATENÇÃO: as rotas exigem token. Utilize pelo postman ou thunderclient.
+
+* Ainda não tenho a documentação da API com swagger, mas aqui na sessão de endpoints estão todas as rotas.
 
 </br>
 *** COMANDOS ***
 :pray::pray::pray::pray:
 </br>
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
+- npm run test -> roda a cobertura de testes
 
 ************** :white_flower:
 <details>
 <summary>Endpoints disponíveis:</summary>
-TODAS AS ROTAS EXIGEM TOKEN, EXCETO PARA CRIAR O CLIENTE!
+TODAS AS ROTAS EXIGEM TOKEN, EXCETO PARA CRIAR O CLIENTE E LOGAR!
+
+<strong>Ativos</strong>
 
  - GET /ativos -> lista todos os ativos disponíveis
+
  - GET /ativos/{id} -> retorna o ativo com aquele id
+
  - GET /ativos/cliente/{id} -> retorna todos os ativos do cliente com esse id -> talvez essa url esteja confusa.
+
+ <strong>Contas</strong>
+
  - GET /contas -> lista todas as contas cadastradas -> Isso deve ter uma autenticação para admin.
+
  - GET /contas/{id} -> retorna a conta daquele cliente específico;
-- PUT /contas/saque -> atualiza a conta com um saque;
 
-  { codCliente: number, valor: number }
+ - PUT /contas/saque -> atualiza a conta com um saque;
 
-- PUT /contas/deposito -> atualiza a conta com um deposito;
+  Req.body: { codCliente: number, valor: number }
 
-  { codCliente: number, valor: number }
+ - PUT /contas/deposito -> atualiza a conta com um deposito;
 
-- POST /contas/ -> criar um novo cliente e retorna um token;
+  Req.body: { codCliente: number, valor: number }
+
+ - POST /contas/ -> criar um novo cliente e retorna um token;
   
-  { nome: string, senha: string, saldo: number }
+  Req.body: { nome: string, senha: string, saldo: number }
 
-- POST /contas/login -> logar numa conta existente, retorna um token;
+ - POST /contas/login -> logar numa conta existente, retorna um token;
 
-  { nome: string, senha: string } -> precisa estar cadastrado;
+  Req.body: { nome: string, senha: string } -> precisa estar cadastrado;
+  
   Para teste use { nome: Sarah Maria, senha: 12345 }
 
+<strong>Investimentos</strong>
+
 - GET /investimentos -> lista todos os investimentos dessa corretora;
+
 - PUT /investimentos/vender -> vende o ativo se tiver;
 
-  { codCliente: number, codAtivo: number, qtde: number }
+  Req.body: { codCliente: number, codAtivo: number, qtde: number }
 
 - PUT /investimentos/comprar -> compra ativos;
   
-  { codCliente: number, codAtivo: number, qtde: number }
+  Req.body: { codCliente: number, codAtivo: number, qtde: number }
+
   </details>
 
 **********************:four_leaf_clover:

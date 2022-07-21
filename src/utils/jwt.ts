@@ -3,6 +3,7 @@ import {
   JwtPayload, sign, verify, SignOptions,
 } from 'jsonwebtoken';
 import ICliente from '../interfaces/ICliente';
+import { HttpException } from '../middlewares/middleError';
 
 dotenv.config();
 const { JWT_SECRET } = process.env;
@@ -17,6 +18,9 @@ const generateToken = (cliente: Omit<ICliente, 'codCliente'>) => sign({ cliente 
 
 const authenticateToken = async (token: string): Promise<string | JwtPayload> => {
   const validate = await verify(token, JWT_SECRET!);
+  // Aqui ele verifica a senhasupersecreta e o tempo.
+  if (!validate) throw new HttpException(401, 'Token inválido');
+
   return validate;
 };
 
