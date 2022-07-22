@@ -35,11 +35,13 @@ Instruções de uso:
 
 * Vá no arquivo .env.example e renomeio para .env -> coloque suas informações pessoais para acessar o mysql;
 
-* O banco já vem com algumas informações para teste. Rode o arquivo PSEL_XP.sql pelo workbench, se você o tiver em sua máquina, ou no próprio vscode através das extensões que manipulam bancos de dados, como o "database client". Infelizmente ainda não criei um script para facilitar essa etapa.
+* O banco já vem com algumas informações para teste manual. Rode o arquivo PSEL_XP pelo workbench, se você o tiver em sua máquina, ou no próprio vscode através das extensões que manipulam bancos de dados, como o "database client". Infelizmente ainda não criei um script para facilitar essa etapa. Para essa etapa é necessário que você tenha o MYSQL instalado em sua máquina e rodando em alguma porta. Pretendo enviar um docker, mas de qualquer forma você precisaria ter o docker em sua máquina.
 
 * Se não quiser o trabalho de clonar o projeto, entre no deploy e utilize normalmente, porém sem acesso ao código. Deploy: https://psel-xp.herokuapp.com/ -> ATENÇÃO: as rotas exigem token. Utilize pelo postman ou thunderclient.
 
 * Ainda não tenho a documentação da API com swagger, mas aqui na sessão de endpoints estão todas as rotas.
+
+* Para testar a aplicação crie um segundo banco com nome de testes, como está no env.example. Aqui no repositório tem o arquivo de sql para teste: psel_xp_test.
 
 </br>
 *** COMANDOS ***
@@ -47,6 +49,7 @@ Instruções de uso:
 </br>
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
 - npm run test -> roda a cobertura de testes
+- npm run test:watch -> verifica testes um a um, sem mostrar a cobertura.
 
 ************** :white_flower:
 <details>
