@@ -3,6 +3,7 @@ import { HttpException } from '../../middlewares/middleError';
 import ContaModel from '../../models/contas.model';
 import {
   contasMock, ID, ID_INVALID, SALDO, SACAR, DEPOSITAR, SUPER_SALDO,
+  NEW_CLIENTE, NOT_CLIENTE, LENGTH_TOKEN,
 } from '../mocks';
 
 describe('Testa o model das contas', () => {
@@ -42,9 +43,40 @@ describe('Testa o model das contas', () => {
     test('Ao enviar saldo maior que valor na conta lança um erro - para saques', async () => {
       await expect(model.atualizarConta(ID, SUPER_SALDO, SACAR)).rejects.toThrowError();
     });
-    test('Ao enviar um id, saldo e "sacar" retira um valor da conta', () => {});
-    test('Ao enviar id, saldo e "depositar" soma valor na conta', () => {});
+    test('Ao enviar um id, saldo e "sacar" retira um valor da conta', async () => {
+      const { saldo } = await model.getById(ID);
+
+      await model.atualizarConta(ID, SALDO, SACAR);
+
+      const newSaldo = Number(saldo) - SALDO;
+      const afterSaque = await model.getById(ID);
+
+      expect(Number(afterSaque.saldo)).toBe(newSaldo);
+    });
+    test('Ao enviar id, saldo e "depositar" soma valor na conta', async () => {
+      const { saldo } = await model.getById(ID);
+
+      await model.atualizarConta(ID, SALDO, DEPOSITAR);
+
+      const newSaldo = Number(saldo) + SALDO;
+      const afterSaque = await model.getById(ID);
+      
+      expect(Number(afterSaque.saldo)).toBe(newSaldo);
+    });
   });
-  describe('Método createConta', () => {});
-  describe('Método loginConta', () => {});
+  describe('Método createConta retorna um token', () => {
+    it('Retorna um token quando cria uma conta', async () => {
+      const token = await model.createConta(NEW_CLIENTE);
+      expect(token.length).toBeGreaterThan(LENGTH_TOKEN);
+    });
+  });
+  describe('Método loginConta', () => {
+    it('Retorna um token se o cliente existe', async () => {
+      const token = await model.loginConta(NEW_CLIENTE);
+      expect(token.length).toBeGreaterThan(LENGTH_TOKEN);
+    });
+    it('Se tenta logar com cliente inexistente gera um erro', async () => {
+      await expect(model.loginConta(NOT_CLIENTE)).rejects.toThrowError();
+    });
+  });
 });

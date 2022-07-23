@@ -41,7 +41,7 @@ Instruções de uso:
 
 * Ainda não tenho a documentação da API com swagger, mas aqui na sessão de endpoints estão todas as rotas.
 
-* Para testar a aplicação crie um segundo banco com nome de testes, como está no env.example. Aqui no repositório tem o arquivo de sql para teste: psel_xp_test.
+* Para testar a aplicação crie um segundo banco com nome de testes, como está no env.example. Aqui no repositório tem o arquivo de sql para teste: psel_xp_test. Lembre de sempre alterar no dotenv em qual ambiente você quer estar, test ou dev.
 
 </br>
 *** COMANDOS ***

@@ -1,14 +1,26 @@
+import Cliente from '../classes/Cliente';
+
 const ID = 1;
 
 const ID_INVALID = 0;
 
-const SALDO = 100;
+const SALDO = 10;
+
+const LENGTH_TOKEN = 20;
 
 const SUPER_SALDO = 1000000;
 
 const SACAR = 'sacar';
 
 const DEPOSITAR = 'depositar';
+
+const NEW_CLIENTE: Omit<Cliente, 'codCliente'> = {
+  nome: 'teste', saldo: 200, ativos: [], senha: 'mariadb',
+};
+
+const NOT_CLIENTE: Omit<Cliente, 'codCliente'> = {
+  nome: 'teste-not', saldo: 200, ativos: [], senha: 'xxxxxxxx',
+};
 
 const ativosMock = [
   {
@@ -61,5 +73,6 @@ const investimentosMock = [
 export {
   ativosMock, contasMock, investimentosMock, ID,
   ID_INVALID, SALDO, SACAR, DEPOSITAR,
-  SUPER_SALDO,
+  SUPER_SALDO, NEW_CLIENTE, NOT_CLIENTE,
+  LENGTH_TOKEN,
 };
