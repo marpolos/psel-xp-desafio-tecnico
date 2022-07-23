@@ -2,10 +2,10 @@ import connection from '../../db/connection';
 import { HttpException } from '../../middlewares/middleError';
 import AtivosModel from '../../models/ativos.model';
 import {
-  COMPRAR, ID, ID_INVALID, SALDO, SUPER_SALDO, QTDE, VENDER,
+  COMPRAR, ID, ID_INVALID, QTDE, VENDER,
 } from '../mocks';
 
-describe('Testa o model dos ativos', () => {
+describe.skip('Testa o model dos ativos', () => {
   let model: AtivosModel;
 
   beforeAll(() => {
