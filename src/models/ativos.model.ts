@@ -41,7 +41,6 @@ export default class AtivosModel {
         valorAtivo, 
       } as IAtivoCliente;
     });
-    if (ativos.length === 0) throw new HttpException(404, 'Esse cliente não possui ativos.');
     return ativos as IAtivoCliente[];
   }
 

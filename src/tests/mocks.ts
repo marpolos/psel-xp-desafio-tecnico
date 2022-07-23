@@ -18,6 +18,8 @@ const VENDER = 'vender';
 
 const COMPRAR = 'comprar';
 
+const QTDE = 10;
+
 const NEW_CLIENTE: Omit<Cliente, 'codCliente'> = {
   nome: 'teste', saldo: 200, ativos: [], senha: 'mariadb',
 };
@@ -78,5 +80,5 @@ export {
   ativosMock, contasMock, investimentosMock, ID,
   ID_INVALID, SALDO, SACAR, DEPOSITAR,
   SUPER_SALDO, NEW_CLIENTE, NOT_CLIENTE,
-  LENGTH_TOKEN, VENDER, COMPRAR,
+  LENGTH_TOKEN, VENDER, COMPRAR, QTDE,
 };
