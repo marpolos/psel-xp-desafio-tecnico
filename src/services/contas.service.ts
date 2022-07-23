@@ -25,6 +25,7 @@ class ContaService {
   public async getById(id: number): Promise<IService<Cliente>> {
     const conta = await this.model.getById(id);
 
+    // Não existe possibilidade de dar erro aqui porque deu throw na model.
     if (!conta) return { statusCode: 404, message: 'Conta não encontrada' };
     return {
       statusCode: 200,
