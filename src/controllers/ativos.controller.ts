@@ -3,8 +3,16 @@ import AtivosService from '../services/ativos.service';
 
 const ativosService = new AtivosService();
 
-const getAll = async (_req: Request, res: Response) => {
-  const { statusCode, data } = await ativosService.getAll();
+const getAll = async (_req: Request, res: Response, next: NextFunction) => {
+  const { statusCode, data, message } = await ativosService.getAll();
+  
+  if (message) {
+    return next({
+      statusCode,
+      message,
+    });
+  }
+  
   return res.status(statusCode).json(data);
 };
 

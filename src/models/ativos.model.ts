@@ -20,7 +20,7 @@ export default class AtivosModel {
     const query = 'SELECT * FROM ativo WHERE id = ?';
     const [rows] = await this.connection.execute(query, [id]);
     const [ativo] = rows as Ativo[];
-    if (!ativo) throw new HttpException(404, 'Ativo não encontrado.');
+    
     return ativo as Ativo;
   }
 
@@ -48,6 +48,7 @@ export default class AtivosModel {
     const query = 'UPDATE ativo SET qtde=? WHERE id=?';
     const ativo = await this.getById(id);
     
+    // Status 409 indica conflito.
     const qtdeAtivoDB = Number(ativo.qtde);
     if (qtdeAtivoDB - qtde < 0) throw new HttpException(409, 'Erro ao atualizar ativo por conta da quantidade.');
 

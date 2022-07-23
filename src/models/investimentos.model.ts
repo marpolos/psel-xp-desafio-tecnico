@@ -38,6 +38,8 @@ export default class InvestimentoModel {
     const result = await this.connection
       .execute<ResultSetHeader>(query, [codCliente, codAtivo, qtde, valorAtivo]);
     const [dataInserted] = result;
+
+    // 409 conflit
     if (dataInserted.affectedRows === 0) throw new HttpException(409, 'Erro ao atualizar relação do cliente com ativo.');
     return {
       codCliente, codAtivo, qtde, valorAtivo,
@@ -95,12 +97,14 @@ export default class InvestimentoModel {
     const { codAtivo, codCliente, qtde } = data;
     // Primeiro, verificar se a qtde para comprar é <= a qtde do ativo
     const ativo = await this.ativosModel.getById(codAtivo);
-    
+    if (!ativo) throw new HttpException(404, 'Ativo não encontrado.');
+
     const qtdeAtivo = Number(ativo.qtde);
     if (qtde > qtdeAtivo) throw new HttpException(409, 'Quantidade de ativo maior que a disponível.');
 
     // Segundo, Verificar se o cliente tem o saldo para comprar o ativo
     const saldoCliente = await this.contaModel.getById(codCliente);
+    if (!saldoCliente) throw new HttpException(404, 'Cliente não encontrado.');
 
     const saldo = Number(saldoCliente.saldo);
     if (saldo < qtde * Number(ativo.valor)) throw new HttpException(409, 'Cliente não tem saldo para comprar o ativo.');

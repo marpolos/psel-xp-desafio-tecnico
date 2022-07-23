@@ -12,6 +12,8 @@ export default class InvestimentosService {
       codCliente, codAtivo, qtde,
     };
     const investimento = await this.investimentosModel.venderAtivo(data);
+    // Todos os erros são lançados na model por envolverem o banco.
+    // Por segurança deixo o return.
     if (!investimento) return { statusCode: 409, message: 'Problema ao vender ativo' };
     // if (investimento.message) return { statusCode: 409, message };
     return {
@@ -24,6 +26,7 @@ export default class InvestimentosService {
   Promise<IService<IAtivoCliente>> {
     const data = { codAtivo, codCliente, qtde };
     const investimento = await this.investimentosModel.comprarAtivo(data);
+    // Todos os possíveis erros tratados na model por envolverem o banco.
     if (!investimento) return { statusCode: 409, message: 'Problema ao comprar ativo' };
     return {
       statusCode: 200,
@@ -33,7 +36,7 @@ export default class InvestimentosService {
 
   public async listaInvestimentos(): Promise<IService<IAtivoCliente[]>> {
     const investimentos = await this.investimentosModel.listaInvestimentos();
-    if (investimentos.length === 0) return { statusCode: 204, message: 'Nenhum investimento realizado na corretora.' };
+    if (!investimentos.length) return { statusCode: 204, message: '' };
     return {
       statusCode: 200,
       data: investimentos as IAtivoCliente[],

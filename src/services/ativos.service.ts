@@ -8,7 +8,7 @@ export default class AtivosService {
 
   public async getAll(): Promise<IService<Ativo>> {
     const ativos = await this.ativosModel.getAll();
-    if (ativos.length === 0) return { statusCode: 204, message: 'Nenhum ativo encontrado' };
+    if (!ativos.length) return { statusCode: 204, message: '' };
     return {
       statusCode: 200,
       data: ativos as Ativo[],
@@ -27,8 +27,9 @@ export default class AtivosService {
 
   public async getByIdCliente(id: number) {
     const ativos = await this.ativosModel.getByIdCliente(id);
-    // O status 204 indica no content;
-    if (!ativos.length) return { statusCode: 204, message: 'Nenhum ativo encontrado para esse cliente' };
+    // O status 204 indica no content, portanto não envia mensagem alguma.
+    
+    if (!ativos.length) return { statusCode: 204, message: '' };
     return {
       statusCode: 200,
       data: ativos,

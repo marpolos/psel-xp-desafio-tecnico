@@ -23,7 +23,7 @@ export default class ContaModel {
     const query = 'SELECT id, nome, saldo FROM cliente WHERE id = ?';
     const [rows] = await this.connection.execute(query, [id]);
     const [cliente] = rows as Cliente[];
-    if (!cliente) throw new HttpException(404, 'Cliente não encontrado.');
+    
     // retorna um {} porque é um [[]]
     // Decidi retirar os as Cliente para tratar tudo no service.
     return cliente;
@@ -48,9 +48,24 @@ export default class ContaModel {
     return newConta;
   }
 
+  public async clienteExiste(nome: string, senha: string) {
+    const query = 'SELECT * FROM cliente WHERE nome=? AND senha=?';
+    const [clienteExiste] = await this.connection.execute(query, [nome, senha]);
+
+    const [find] = clienteExiste as Cliente[];
+    
+    return find;
+  }
+
   public async createConta(cliente: Omit<Cliente, 'codCliente'>) {
     const query = 'INSERT INTO cliente (nome, saldo, senha) VALUES (?, ?, ?)';
     const { nome, saldo, senha } = cliente;
+
+    const alreadyExist = await this.clienteExiste(nome, senha!);
+    
+    // 400 bad request
+    if (alreadyExist) throw new HttpException(400, 'Cliente já existe.');
+
     await this.connection.execute(query, [nome, saldo, senha]);
 
     const token = generateToken(cliente);
@@ -60,13 +75,12 @@ export default class ContaModel {
   public async loginConta(cliente: Omit<Cliente, 'codCliente'>) {
     const { nome, senha } = cliente;
     // Usei essa fonte para me ajudar: https://dev.to/vitordelfino/autenticacao-com-jwt-22o7
-    const query = 'SELECT * FROM cliente WHERE nome = ? AND senha = ?';
-    const [clienteExiste] = await this.connection.execute(query, [nome, senha]);
-    const [find] = clienteExiste as Cliente[];
+    const alreadyExist = await this.clienteExiste(nome, senha!);
     // Aqui eu retorno false para dar erro se não encontrar o cliente;
-    if (!find) throw new HttpException(404, 'Cliente não encontrado');
+    // 404 not found
+    if (!alreadyExist) throw new HttpException(404, 'Cliente não encontrado');
       
-    const token = generateToken(find);
+    const token = generateToken(alreadyExist);
     return token;
   }
 }
