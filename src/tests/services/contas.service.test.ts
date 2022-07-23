@@ -1,7 +1,7 @@
 import { HttpException } from '../../middlewares/middleError';
 import contasService from '../../services/contas.service';
 import {
-  DEPOSITAR, ID, ID_INVALID, SACAR, SALDO, SUPER_SALDO, 
+  DEPOSITAR, ID, ID_INVALID, NEW_CLIENTE, NOT_CLIENTE, SACAR, SALDO, SUPER_SALDO, 
 } from '../mocks';
 
 describe('Testa o service das contas', () => {
@@ -62,12 +62,27 @@ describe('Testa o service das contas', () => {
   });
 
   describe('Método createConta', () => {
-    it('Ao criar um usuário com sucesso retorna status 201', async () => {});
-    it('Se não cria a conta retorna status 409', async () => {});
+    it('Ao criar um usuário com sucesso retorna status 201', async () => {
+      const response = await contasService.createConta(NEW_CLIENTE);
+      
+      expect(response).toHaveProperty('statusCode');
+      expect(response).toHaveProperty('data');
+      expect(response).not.toHaveProperty('message');
+      expect(response.statusCode).toBe(201);
+    });
   });
 
   describe('Método loginConta', () => {
-    it('Se realiza login com sucesso retorna status 200', async () => {});
-    it('Se há erro no login retorna status 404', async () => {});
+    it('Se realiza login com sucesso retorna status 200', async () => {
+      const response = await contasService.loginConta(NEW_CLIENTE);
+
+      expect(response).toHaveProperty('statusCode');
+      expect(response).toHaveProperty('data');
+      expect(response).not.toHaveProperty('message');
+      expect(response.statusCode).toBe(200);
+    });
+    it('Se há erro no login retorna status 404', async () => {
+      await expect(contasService.loginConta(NOT_CLIENTE)).rejects.toThrowError();
+    });
   });
 });
