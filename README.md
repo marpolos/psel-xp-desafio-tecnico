@@ -124,6 +124,9 @@ E cheguei ali através daqui: https://stackoverflow.com/questions/69592313/herok
 O heroku tem uma variável que é setada como default true e faz com que ele só instale dependências, e não as dev. NPM_CONFIG_PRODUCTION. Para mim realmente faz sentido porque devDependency servem para os devs, e não os users.
 * ClearDB:  mysql://b7bde549b8cab4:5810fabc@us-cdbr-east-06.cleardb.net/heroku_f7cd05b49b94cc6?reconnect=true
 * Passei um dia inteiro para subir o banco de dados, motivo: HOST/HOSTNAME -> escrita e eu não percebi porque estava muito ansiosa.
+* Testar é um desafio para mim, especialmente por estar usando o typescript. Usei esse tutorial para clarear minha mente: https://stackoverflow.com/questions/59235639/how-to-mock-response-from-service-for-testing-controller-in-typescript-using-jes
+https://blog.logrocket.com/testing-typescript-apps-using-jest/
+E um vídeo do rockeseat com testes em jest e supertest.
 
 b7bde549b8cab4: username
 5810fabc: password

@@ -47,7 +47,6 @@ describe.skip('Testa o model dos ativos', () => {
     });
     it('Ao enviar o id de um cliente sem ativos lança um erro', async () => {
       const response = await model.getByIdCliente(ID_INVALID);
-      console.log('cliente invalid', response);
       /* await expect(model.getByIdCliente(ID_INVALID)).rejects.toEqual(
         new HttpException(404, 'Esse cliente não possui ativos.'),
       ); */

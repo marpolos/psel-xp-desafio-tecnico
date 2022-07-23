@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import contasController from '../../controllers/contas.controller';
 import { HttpException } from '../../middlewares/middleError';
-import contasService from '../../services/contas.service';
+
 import {
   contasMock, ID, ID_INVALID, NEW_CLIENTE, NOT_CLIENTE, SALDO, SUPER_SALDO, 
 } from '../mocks';
+
+// Usei esse conteúdo para testar o controller:
+// https://stackoverflow.com/questions/59235639/how-to-mock-response-from-service-for-testing-controller-in-typescript-using-jes
 
 /* jest.mock('../../services/contas.service', () => {
   const serviceMock = {

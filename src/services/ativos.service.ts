@@ -29,7 +29,7 @@ export default class AtivosService {
   public async getByIdCliente(id: number) {
     const ativos = await this.ativosModel.getByIdCliente(id);
     // O status 204 indica no content;
-    if (!ativos.length) throw new HttpException(204, 'Nenhum ativo encontrado para esse cliente')
+    if (!ativos.length) return { statusCode: 204, message: 'Nenhum ativo encontrado para esse cliente' };
     return {
       statusCode: 200,
       data: ativos,
