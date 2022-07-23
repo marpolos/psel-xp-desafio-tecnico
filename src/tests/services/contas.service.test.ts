@@ -4,7 +4,7 @@ import {
   DEPOSITAR, ID, ID_INVALID, NEW_CLIENTE, NOT_CLIENTE, SACAR, SALDO, SUPER_SALDO, 
 } from '../mocks';
 
-describe('Testa o service das contas', () => {
+describe.skip('Testa o service das contas', () => {
   describe('Método getAll', () => {
     it('Retorna status 200 e um data de array', async () => {
       const response = await contasService.getAll();

@@ -16,7 +16,7 @@ describe.skip('Testa o model das contas', () => {
   describe('Método getAll', () => {
     test('Verifica se retorna um array de Clientes', async () => {
       const response = await model.getAll();
-      expect(typeof response).toBeTruthy();
+      expect(typeof response).toBe('object');
     });
   });
 
