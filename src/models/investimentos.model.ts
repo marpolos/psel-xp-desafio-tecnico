@@ -102,8 +102,9 @@ export default class InvestimentoModel {
     const qtdeAtivo = Number(ativo.qtde);
     if (qtde > qtdeAtivo) throw new HttpException(409, 'Quantidade de ativo maior que a disponível.');
 
-    // Segundo, Verificar se o cliente tem o saldo para comprar o ativo
+    // Segundo, Verificar se o cliente tem o saldo para comprar o ativo e se ele existe
     const saldoCliente = await this.contaModel.getById(codCliente);
+    console.log('verifica cliente', saldoCliente);
     if (!saldoCliente) throw new HttpException(404, 'Cliente não encontrado.');
 
     const saldo = Number(saldoCliente.saldo);
