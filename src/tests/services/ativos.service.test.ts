@@ -45,8 +45,8 @@ describe('Testa o service dos ativos', () => {
       expect(response.statusCode).toBe(200);
     });
     it('Ao enviar o id de um cliente sem ativos retorna status 204', async () => {
-      const response = await service.getByIdCliente(ID_INVALID));
-      expect(response.statusCode).toBeCalledWith(204);
+      const response = await service.getByIdCliente(ID_INVALID);
+      expect(response.statusCode).toBe(204);
       expect(response).toHaveProperty('message');
     });
   });

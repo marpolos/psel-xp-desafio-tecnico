@@ -44,10 +44,10 @@ var middleError_1 = require("../../middlewares/middleError");
 var ativos_model_1 = __importDefault(require("../../models/ativos.model"));
 var mocks_1 = require("../mocks");
 describe('Testa o model dos ativos', function () {
-    var model;
-    beforeAll(function () {
-        model = new ativos_model_1.default(connection_1.default);
-    });
+    var model = new ativos_model_1.default(connection_1.default);
+    /* beforeAll(() => {
+      model = new AtivosModel(connection);
+    }); */
     describe('Método getAll', function () {
         it('Verifica se retorna um array de ativos', function () { return __awaiter(void 0, void 0, void 0, function () {
             var result;

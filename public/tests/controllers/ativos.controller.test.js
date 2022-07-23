@@ -158,8 +158,7 @@ describe('Testa o controller dos ativos', function () {
                                 .getByIdCliente(mReq, mRes, mNext)];
                     case 1:
                         _a.sent();
-                        expect(mNext).toBeCalled();
-                        expect(mRes).not.toBeCalled();
+                        expect(mRes).toBeCalledWith(204);
                         return [2 /*return*/];
                 }
             });
