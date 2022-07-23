@@ -91,6 +91,24 @@ var InvestimentosService = /** @class */ (function () {
             });
         });
     };
+    InvestimentosService.prototype.listaInvestimentos = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var investimentos;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.investimentosModel.listaInvestimentos()];
+                    case 1:
+                        investimentos = _a.sent();
+                        if (investimentos.length === 0)
+                            return [2 /*return*/, { statusCode: 204, message: 'Nenhum investimento realizado na corretora.' }];
+                        return [2 /*return*/, {
+                                statusCode: 200,
+                                data: investimentos,
+                            }];
+                }
+            });
+        });
+    };
     return InvestimentosService;
 }());
 exports.default = InvestimentosService;

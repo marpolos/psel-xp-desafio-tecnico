@@ -2,12 +2,12 @@ import { HttpException } from '../../middlewares/middleError';
 import AtivosService from '../../services/ativos.service';
 import { ID, ID_INVALID } from '../mocks';
 
-describe.skip('Testa o service dos ativos', () => {
-  let service: AtivosService;
+describe('Testa o service dos ativos', () => {
+  const service: AtivosService = new AtivosService();
 
-  beforeAll(() => {
+  /* beforeAll(() => {
     service = new AtivosService();
-  });
+  }); */
 
   describe('Método getAll', () => {
     it('Retorna status 200 e um data de array', async () => {
@@ -44,10 +44,10 @@ describe.skip('Testa o service dos ativos', () => {
       expect(response).not.toHaveProperty('message');
       expect(response.statusCode).toBe(200);
     });
-    it('Ao enviar o id de um cliente sem ativos lança um erro', async () => {
-      await expect(service.getByIdCliente(ID_INVALID)).rejects.toEqual(
-        new HttpException(204, 'Nenhum ativo encontrado para esse cliente'),
-      );
+    it('Ao enviar o id de um cliente sem ativos retorna status 204', async () => {
+      const response = await service.getByIdCliente(ID_INVALID));
+      expect(response.statusCode).toBeCalledWith(204);
+      expect(response).toHaveProperty('message');
     });
   });
 });

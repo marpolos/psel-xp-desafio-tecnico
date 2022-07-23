@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var middleError_1 = require("../middlewares/middleError");
 var AtivosModel = /** @class */ (function () {
     function AtivosModel(conn) {
         this.connection = conn;
@@ -66,6 +67,8 @@ var AtivosModel = /** @class */ (function () {
                     case 1:
                         rows = (_a.sent())[0];
                         ativo = rows[0];
+                        if (!ativo)
+                            throw new middleError_1.HttpException(404, 'Ativo não encontrado.');
                         return [2 /*return*/, ativo];
                 }
             });
@@ -105,17 +108,15 @@ var AtivosModel = /** @class */ (function () {
                         return [4 /*yield*/, this.getById(id)];
                     case 1:
                         ativo = _a.sent();
-                        if (!ativo)
-                            return [2 /*return*/, {}];
                         qtdeAtivoDB = Number(ativo.qtde);
                         if (qtdeAtivoDB - qtde < 0)
-                            return [2 /*return*/, {}];
+                            throw new middleError_1.HttpException(409, 'Erro ao atualizar ativo por conta da quantidade.');
                         return [4 /*yield*/, this.connection
                                 .execute(query, [type === 'vender' ? qtdeAtivoDB + qtde : qtdeAtivoDB - qtde, id])];
                     case 2:
                         upAtivo = (_a.sent())[0];
                         if (upAtivo.affectedRows === 0)
-                            return [2 /*return*/, {}];
+                            throw new middleError_1.HttpException(409, 'Erro ao atualizar ativo.');
                         return [4 /*yield*/, this.getById(id)];
                     case 3:
                         newAtivo = _a.sent();

@@ -53,7 +53,7 @@
     "underscore": "^1.13.4"
   },
   "scripts": {
-    "test": "npx jest --coverage",
+    "test:coverage": "npx jest --coverage",
     "test:watch": "npx jest --watch",
     "mocha": "mocha ./tests/**/*$NAME*.test.js --exit",
     "start": "node public/index.js",

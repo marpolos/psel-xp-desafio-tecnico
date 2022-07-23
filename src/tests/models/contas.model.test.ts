@@ -6,7 +6,7 @@ import {
   NEW_CLIENTE, NOT_CLIENTE, LENGTH_TOKEN,
 } from '../mocks';
 
-describe.skip('Testa o model das contas', () => {
+describe('Testa o model das contas', () => {
   let model: ContaModel;
 
   beforeAll(() => {

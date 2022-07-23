@@ -41,6 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ativos_model_1 = __importDefault(require("./ativos.model"));
 var contas_model_1 = __importDefault(require("./contas.model"));
+var middleError_1 = require("../middlewares/middleError");
 var InvestimentoModel = /** @class */ (function () {
     function InvestimentoModel(conn) {
         this.connection = conn;
@@ -77,7 +78,7 @@ var InvestimentoModel = /** @class */ (function () {
                         result = _a.sent();
                         dataInserted = result[0];
                         if (dataInserted.affectedRows === 0)
-                            return [2 /*return*/, {}];
+                            throw new middleError_1.HttpException(409, 'Erro ao atualizar relação do cliente com ativo.');
                         return [2 /*return*/, {
                                 codCliente: codCliente,
                                 codAtivo: codAtivo,
@@ -101,7 +102,7 @@ var InvestimentoModel = /** @class */ (function () {
                     case 1:
                         upRelation = (_a.sent())[0];
                         if (upRelation.affectedRows === 0)
-                            return [2 /*return*/, {}];
+                            throw new middleError_1.HttpException(409, 'Erro ao atualizar match.');
                         return [4 /*yield*/, this.matchAtivoCliente(codCliente, codAtivo)];
                     case 2:
                         newRelation = _a.sent();
@@ -112,7 +113,7 @@ var InvestimentoModel = /** @class */ (function () {
     };
     InvestimentoModel.prototype.venderAtivo = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var codAtivo, codCliente, qtde, isMatch, qtdeCliente, upMatch, atualizarAtivo, deposito, atualizarCliente, newRelation, codCli, codAt, newQ, valorAtivo, dataTratado;
+            var codAtivo, codCliente, qtde, isMatch, qtdeCliente, deposito, newRelation, codCli, codAt, newQ, valorAtivo, dataTratado;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -120,27 +121,26 @@ var InvestimentoModel = /** @class */ (function () {
                         return [4 /*yield*/, this.matchAtivoCliente(codCliente, codAtivo)];
                     case 1:
                         isMatch = _a.sent();
+                        // 409 indica algum conflito de informações
                         if (!isMatch)
-                            return [2 /*return*/, { message: 'Cliente não relacionado ao ativo.' }];
+                            throw new middleError_1.HttpException(409, 'Cliente não relacionado ao ativo.');
                         qtdeCliente = Number(isMatch.qtde) >= qtde;
                         if (!qtdeCliente)
-                            return [2 /*return*/, { message: 'Cliente não tem a quantidade de ativo para vender.' }];
+                            throw new middleError_1.HttpException(409, 'Cliente não tem a quantidade de ativo para vender.');
+                        // Terceiro, atualizar relação cliente-ativo
                         return [4 /*yield*/, this.atualizarMatch(codCliente, codAtivo, Number(isMatch.qtde) - qtde)];
                     case 2:
-                        upMatch = _a.sent();
-                        if (!upMatch)
-                            return [2 /*return*/, { message: 'Erro ao atualizar match.' }];
+                        // Terceiro, atualizar relação cliente-ativo
+                        _a.sent();
+                        // Quarto, atualizar o ativo
                         return [4 /*yield*/, this.ativosModel.atualizarAtivo(codAtivo, qtde, 'vender')];
                     case 3:
-                        atualizarAtivo = _a.sent();
-                        if (!atualizarAtivo)
-                            return [2 /*return*/, { message: 'Erro ao atualizar ativo. ' }];
+                        // Quarto, atualizar o ativo
+                        _a.sent();
                         deposito = qtde * Number(isMatch.valor_ativo);
                         return [4 /*yield*/, this.contaModel.atualizarConta(codCliente, deposito, 'depositar')];
                     case 4:
-                        atualizarCliente = _a.sent();
-                        if (!atualizarCliente)
-                            return [2 /*return*/, { message: 'Erro ao atualizar conta. ' }];
+                        _a.sent();
                         return [4 /*yield*/, this.matchAtivoCliente(codCliente, codAtivo)];
                     case 5:
                         newRelation = _a.sent();
@@ -158,7 +158,7 @@ var InvestimentoModel = /** @class */ (function () {
     };
     InvestimentoModel.prototype.comprarAtivo = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var codAtivo, codCliente, qtde, ativo, qtdeAtivo, saldoCliente, saldo, saque, atualizarCliente, isMatch, newMatch, upMatch, atualizarAtivo, newRelation, codCli, codAt, newQ, valorAtivo, dataTratado;
+            var codAtivo, codCliente, qtde, ativo, qtdeAtivo, saldoCliente, saldo, saque, isMatch, newRelation, codCli, codAt, newQ, valorAtivo, dataTratado;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -166,48 +166,39 @@ var InvestimentoModel = /** @class */ (function () {
                         return [4 /*yield*/, this.ativosModel.getById(codAtivo)];
                     case 1:
                         ativo = _a.sent();
-                        if (!ativo)
-                            return [2 /*return*/, { message: 'Ativo não encontrado.' }];
                         qtdeAtivo = Number(ativo.qtde);
                         if (qtde > qtdeAtivo)
-                            return [2 /*return*/, { message: 'Quantidade de ativo maior que a disponível.' }];
+                            throw new middleError_1.HttpException(409, 'Quantidade de ativo maior que a disponível.');
                         return [4 /*yield*/, this.contaModel.getById(codCliente)];
                     case 2:
                         saldoCliente = _a.sent();
-                        if (!saldoCliente)
-                            return [2 /*return*/, { message: 'Cliente não encontrado.' }];
                         saldo = Number(saldoCliente.saldo);
                         if (saldo < qtde * Number(ativo.valor))
-                            return [2 /*return*/, { message: 'Cliente não tem saldo para comprar o ativo.' }];
+                            throw new middleError_1.HttpException(409, 'Cliente não tem saldo para comprar o ativo.');
                         saque = qtde * Number(ativo.valor);
-                        return [4 /*yield*/, this.contaModel.atualizarConta(codCliente, saque, null)];
+                        // Aqui passo null como type porque quero sacar da conta para comprar o ativo
+                        return [4 /*yield*/, this.contaModel.atualizarConta(codCliente, saque, 'sacar')];
                     case 3:
-                        atualizarCliente = _a.sent();
-                        if (!atualizarCliente)
-                            return [2 /*return*/, { message: 'Erro ao atualizar conta. ' }];
+                        // Aqui passo null como type porque quero sacar da conta para comprar o ativo
+                        _a.sent();
                         return [4 /*yield*/, this.matchAtivoCliente(codCliente, codAtivo)];
                     case 4:
                         isMatch = _a.sent();
-                        if (!!isMatch) return [3 /*break*/, 6];
-                        return [4 /*yield*/, this.criarMatch(codCliente, codAtivo, qtde, ativo.valor)];
-                    case 5:
-                        newMatch = _a.sent();
-                        if (!newMatch)
-                            return [2 /*return*/, { message: 'Erro ao criar match.' }];
-                        _a.label = 6;
-                    case 6:
-                        if (!isMatch) return [3 /*break*/, 8];
+                        if (!isMatch) return [3 /*break*/, 6];
                         return [4 /*yield*/, this.atualizarMatch(codCliente, codAtivo, Number(isMatch.qtde) + qtde)];
+                    case 5:
+                        _a.sent();
+                        return [3 /*break*/, 8];
+                    case 6: return [4 /*yield*/, this.criarMatch(codCliente, codAtivo, qtde, ativo.valor)];
                     case 7:
-                        upMatch = _a.sent();
-                        if (!upMatch)
-                            return [2 /*return*/, { message: 'Erro ao atualizar match.' }];
+                        _a.sent();
                         _a.label = 8;
-                    case 8: return [4 /*yield*/, this.ativosModel.atualizarAtivo(codAtivo, qtde, 'comprar')];
+                    case 8: 
+                    // Sexto, atualiza a tabela de ativo
+                    return [4 /*yield*/, this.ativosModel.atualizarAtivo(codAtivo, qtde, 'comprar')];
                     case 9:
-                        atualizarAtivo = _a.sent();
-                        if (!atualizarAtivo)
-                            return [2 /*return*/, { message: 'Erro ao atualizar ativo. ' }];
+                        // Sexto, atualiza a tabela de ativo
+                        _a.sent();
                         return [4 /*yield*/, this.matchAtivoCliente(codCliente, codAtivo)];
                     case 10:
                         newRelation = _a.sent();
@@ -219,6 +210,30 @@ var InvestimentoModel = /** @class */ (function () {
                             valorAtivo: valorAtivo,
                         };
                         return [2 /*return*/, dataTratado];
+                }
+            });
+        });
+    };
+    InvestimentoModel.prototype.listaInvestimentos = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var query, rows, lista;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        query = 'SELECT * FROM cliente_ativo';
+                        return [4 /*yield*/, this.connection.execute(query)];
+                    case 1:
+                        rows = (_a.sent())[0];
+                        lista = Object.values(rows).map(function (row) {
+                            var codCliente = row.id_cliente, codAtivo = row.id_ativo, qtde = row.qtde, valorAtivo = row.valor_ativo;
+                            return {
+                                codCliente: codCliente,
+                                codAtivo: codAtivo,
+                                qtde: qtde,
+                                valorAtivo: valorAtivo,
+                            };
+                        });
+                        return [2 /*return*/, lista];
                 }
             });
         });

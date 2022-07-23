@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.authenticateToken = exports.generateToken = void 0;
 var dotenv_1 = __importDefault(require("dotenv"));
 var jsonwebtoken_1 = require("jsonwebtoken");
+var middleError_1 = require("../middlewares/middleError");
 dotenv_1.default.config();
 var JWT_SECRET = process.env.JWT_SECRET;
 // Configurações padrãoes para o JWT
@@ -58,6 +59,9 @@ var authenticateToken = function (token) { return __awaiter(void 0, void 0, void
             case 0: return [4 /*yield*/, (0, jsonwebtoken_1.verify)(token, JWT_SECRET)];
             case 1:
                 validate = _a.sent();
+                // Aqui ele verifica a senhasupersecreta e o tempo.
+                if (!validate)
+                    throw new middleError_1.HttpException(401, 'Token inválido');
                 return [2 /*return*/, validate];
         }
     });

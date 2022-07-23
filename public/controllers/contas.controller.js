@@ -87,14 +87,14 @@ var getById = function (req, res, next) { return __awaiter(void 0, void 0, void 
     });
 }); };
 var atualizarConta = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var type, _a, id, saldo, _b, statusCode, data, message;
+    var type, _a, codCliente, saldo, _b, statusCode, data, message;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
-                type = req.url === '/saque' ? null : 'deposito';
-                _a = req.body, id = _a.id, saldo = _a.saldo;
+                type = req.url === '/saque' ? 'sacar' : 'depositar';
+                _a = req.body, codCliente = _a.codCliente, saldo = _a.saldo;
                 return [4 /*yield*/, contas_service_1.default
-                        .atualizarConta(Number(id), Number(saldo), type)];
+                        .atualizarConta(Number(codCliente), Number(saldo), type)];
             case 1:
                 _b = _c.sent(), statusCode = _b.statusCode, data = _b.data, message = _b.message;
                 if (message) {

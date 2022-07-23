@@ -104,8 +104,7 @@ describe('Testa o controller dos ativos', () => {
           mRes as unknown as Response,
           mNext as NextFunction,
         );
-      expect(mNext).toBeCalled();
-      expect(mRes).not.toBeCalled();
+      expect(mRes).toBeCalledWith(204);
     });
   });
 });

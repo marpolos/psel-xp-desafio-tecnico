@@ -45,30 +45,21 @@ exports.default = (function (req, res, next) { return __awaiter(void 0, void 0, 
             case 0:
                 token = req.headers.authorization;
                 // O 401 diz que é não autorizado;
-                if (!token) {
-                    next({
-                        statusCode: 401,
-                        message: 'token não encontrado ou inválido',
-                    });
-                }
+                if (!token)
+                    throw new middleError_1.HttpException(401, 'token não encontrado ou inválido');
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, (0, jwt_1.authenticateToken)(token)];
             case 2:
                 cliente = _a.sent();
-                if (!cliente)
-                    throw new middleError_1.HttpException(401, 'Token inválido');
+                // Aqui eu não dou throw porque ele ocorre lá no authenticate;
                 res.locals.user = cliente;
                 next();
                 return [3 /*break*/, 4];
             case 3:
                 err_1 = _a.sent();
-                next({
-                    statusCode: 401,
-                    message: 'Token expirado ou inválido.',
-                });
-                return [3 /*break*/, 4];
+                throw new middleError_1.HttpException(401, 'Token expirado ou inválido.');
             case 4: return [2 /*return*/];
         }
     });

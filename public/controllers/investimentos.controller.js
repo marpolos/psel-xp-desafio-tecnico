@@ -100,4 +100,21 @@ var comprarAtivo = function (req, res, next) { return __awaiter(void 0, void 0, 
         }
     });
 }); };
-exports.default = { venderAtivo: venderAtivo, comprarAtivo: comprarAtivo };
+var listaInvestimentos = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, statusCode, data, message;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0: return [4 /*yield*/, investimentosService.listaInvestimentos()];
+            case 1:
+                _a = _b.sent(), statusCode = _a.statusCode, data = _a.data, message = _a.message;
+                if (message) {
+                    return [2 /*return*/, next({
+                            statusCode: statusCode,
+                            message: message,
+                        })];
+                }
+                return [2 /*return*/, res.status(statusCode).json(data)];
+        }
+    });
+}); };
+exports.default = { venderAtivo: venderAtivo, comprarAtivo: comprarAtivo, listaInvestimentos: listaInvestimentos };

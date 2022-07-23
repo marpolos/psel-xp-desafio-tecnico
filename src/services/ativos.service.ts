@@ -2,7 +2,6 @@ import AtivosModel from '../models/ativos.model';
 import Ativo from '../classes/Ativo';
 import connection from '../db/connection';
 import IService from '../interfaces/IService';
-import { HttpException } from '../middlewares/middleError';
 
 export default class AtivosService {
   constructor(public ativosModel = new AtivosModel(connection)) { }

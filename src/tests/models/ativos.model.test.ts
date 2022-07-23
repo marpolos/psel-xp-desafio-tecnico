@@ -5,12 +5,12 @@ import {
   COMPRAR, ID, ID_INVALID, QTDE, VENDER,
 } from '../mocks';
 
-describe.skip('Testa o model dos ativos', () => {
-  let model: AtivosModel;
+describe('Testa o model dos ativos', () => {
+  const model: AtivosModel = new AtivosModel(connection);
 
-  beforeAll(() => {
+  /* beforeAll(() => {
     model = new AtivosModel(connection);
-  });
+  }); */
 
   describe('Método getAll', () => {
     it('Verifica se retorna um array de ativos', async () => {

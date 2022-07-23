@@ -54,7 +54,7 @@ var AtivosService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.ativosModel.getAll()];
                     case 1:
                         ativos = _a.sent();
-                        if (!ativos)
+                        if (ativos.length === 0)
                             return [2 /*return*/, { statusCode: 204, message: 'Nenhum ativo encontrado' }];
                         return [2 /*return*/, {
                                 statusCode: 200,
@@ -90,7 +90,8 @@ var AtivosService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.ativosModel.getByIdCliente(id)];
                     case 1:
                         ativos = _a.sent();
-                        if (!ativos)
+                        // O status 204 indica no content;
+                        if (!ativos.length)
                             return [2 /*return*/, { statusCode: 204, message: 'Nenhum ativo encontrado para esse cliente' }];
                         return [2 /*return*/, {
                                 statusCode: 200,

@@ -69,6 +69,8 @@ var ContaModel = /** @class */ (function () {
                     case 1:
                         rows = (_a.sent())[0];
                         cliente = rows[0];
+                        if (!cliente)
+                            throw new middleError_1.HttpException(404, 'Cliente não encontrado.');
                         // retorna um {} porque é um [[]]
                         // Decidi retirar os as Cliente para tratar tudo no service.
                         return [2 /*return*/, cliente];
@@ -87,16 +89,16 @@ var ContaModel = /** @class */ (function () {
                     case 1:
                         cliente = _a.sent();
                         if (!cliente)
-                            return [2 /*return*/, {}]; /* throw new HttpException(404, 'Cliente não encontrado'); */
+                            throw new middleError_1.HttpException(404, 'Cliente não encontrado');
                         saldoInDB = Number(cliente.saldo);
-                        if (!type && saldoInDB < saldo)
-                            return [2 /*return*/, {}];
-                        newSaldo = type ? saldoInDB + saldo : saldoInDB - saldo;
+                        if (type === 'sacar' && saldoInDB < saldo)
+                            throw new middleError_1.HttpException(400, 'Saldo insuficiente');
+                        newSaldo = type === 'depositar' ? saldoInDB + saldo : saldoInDB - saldo;
                         return [4 /*yield*/, this.connection.execute(query, [newSaldo, id])];
                     case 2:
                         upConta = (_a.sent())[0];
                         if (upConta.affectedRows === 0)
-                            return [2 /*return*/, {}];
+                            throw new middleError_1.HttpException(409, 'Erro ao atualizar conta.');
                         return [4 /*yield*/, this.getById(id)];
                     case 3:
                         newConta = _a.sent();
@@ -124,28 +126,21 @@ var ContaModel = /** @class */ (function () {
     };
     ContaModel.prototype.loginConta = function (cliente) {
         return __awaiter(this, void 0, void 0, function () {
-            var nome, senha, query, clienteExiste, find, token, err_1;
+            var nome, senha, query, clienteExiste, find, token;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         nome = cliente.nome, senha = cliente.senha;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
                         query = 'SELECT * FROM cliente WHERE nome = ? AND senha = ?';
                         return [4 /*yield*/, this.connection.execute(query, [nome, senha])];
-                    case 2:
+                    case 1:
                         clienteExiste = (_a.sent())[0];
                         find = clienteExiste[0];
                         // Aqui eu retorno false para dar erro se não encontrar o cliente;
                         if (!find)
-                            return [2 /*return*/, false];
+                            throw new middleError_1.HttpException(404, 'Cliente não encontrado');
                         token = (0, jwt_1.generateToken)(find);
                         return [2 /*return*/, token];
-                    case 3:
-                        err_1 = _a.sent();
-                        throw new middleError_1.HttpException(404, 'Cliente não encontrado');
-                    case 4: return [2 /*return*/];
                 }
             });
         });
