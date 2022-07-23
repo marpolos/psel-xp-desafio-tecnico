@@ -1,7 +1,9 @@
 import connection from '../../db/connection';
 import { HttpException } from '../../middlewares/middleError';
 import AtivosModel from '../../models/ativos.model';
-import { ID, ID_INVALID } from '../mocks';
+import {
+  COMPRAR, ID, ID_INVALID, SALDO, SUPER_SALDO, 
+} from '../mocks';
 
 describe('Testa o service dos ativos', () => {
   let model: AtivosModel;
@@ -50,5 +52,25 @@ describe('Testa o service dos ativos', () => {
     });
   });
 
-  describe('Método atualizarAtivo', () => {});
+  describe('Método atualizarAtivo', () => {
+    it('Se a quantidade a ser comprada for maior que a disponível, lança um erro', async () => {
+      await expect(model.atualizarAtivo(ID, SUPER_SALDO, COMPRAR)).rejects.toEqual(
+        new HttpException(409, 'Erro ao atualizar ativo por conta da quantidade.'),
+      );
+    });
+    it('Se a quantidade a ser comprada do ativo for menor que a disponível, então retorna uma quantidade final menor', async () => {
+      const { qtde } = await model.getById(ID);
+
+      await model.atualizarAtivo(ID, SALDO, COMPRAR);
+      const afterAtivo = await model.getById(ID);
+      expect(Number(qtde)).toBeGreaterThan(Number(afterAtivo.qtde));
+    });
+    it('Se estiver vendendo, retorna uma quantidade maior', async () => {
+      const { qtde } = await model.getById(ID);
+
+      await model.atualizarAtivo(ID, SALDO, COMPRAR);
+      const afterAtivo = await model.getById(ID);
+      expect(Number(qtde)).toBeLessThan(Number(afterAtivo.qtde));
+    });
+  });
 });

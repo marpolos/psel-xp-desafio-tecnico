@@ -14,6 +14,10 @@ const SACAR = 'sacar';
 
 const DEPOSITAR = 'depositar';
 
+const VENDER = 'vender';
+
+const COMPRAR = 'comprar';
+
 const NEW_CLIENTE: Omit<Cliente, 'codCliente'> = {
   nome: 'teste', saldo: 200, ativos: [], senha: 'mariadb',
 };
@@ -74,5 +78,5 @@ export {
   ativosMock, contasMock, investimentosMock, ID,
   ID_INVALID, SALDO, SACAR, DEPOSITAR,
   SUPER_SALDO, NEW_CLIENTE, NOT_CLIENTE,
-  LENGTH_TOKEN,
+  LENGTH_TOKEN, VENDER, COMPRAR,
 };
