@@ -1,6 +1,8 @@
 import { HttpException } from '../../middlewares/middleError';
 import contasService from '../../services/contas.service';
-import { ID, ID_INVALID } from '../mocks';
+import {
+  DEPOSITAR, ID, ID_INVALID, SACAR, SALDO, SUPER_SALDO, 
+} from '../mocks';
 
 describe('Testa o service das contas', () => {
   describe('Método getAll', () => {
@@ -31,17 +33,41 @@ describe('Testa o service das contas', () => {
   });
 
   describe('Método atualizarConta', () => {
-    it('Se atualiza com sucesso retorna status 200 e um data', () => {});
-    it('Se não atualizar o saldo retorna status 409', () => {});
+    it('Se atualiza com sucesso retorna status 200 e um data - sacar', async () => {
+      const response = await contasService.atualizarConta(ID, SALDO, SACAR);
+      
+      expect(response).toHaveProperty('statusCode');
+      expect(response).toHaveProperty('data');
+      expect(response).not.toHaveProperty('message');
+      expect(response.statusCode).toBe(200);
+    });
+    it('Se atualiza com sucesso retorna status 200 e um data - depositar', async () => {
+      const response = await contasService.atualizarConta(ID, SALDO, DEPOSITAR);
+
+      expect(response).toHaveProperty('statusCode');
+      expect(response).toHaveProperty('data');
+      expect(response).not.toHaveProperty('message');
+      expect(response.statusCode).toBe(200);
+    });
+    it('Se o id não existe retorna um erro', async () => {
+      await expect(contasService.atualizarConta(ID_INVALID, SALDO, SACAR)).rejects.toEqual(
+        new HttpException(404, 'Cliente não encontrado.'),
+      );
+    });
+    it('Se o valor para saque for maior que o na conta lança um erro', async () => {
+      await expect(contasService.atualizarConta(ID, SUPER_SALDO, SACAR)).rejects.toEqual(
+        new HttpException(400, 'Saldo insuficiente'),
+      );
+    });
   });
 
   describe('Método createConta', () => {
-    it('Ao criar um usuário com sucesso retorna status 201', () => {});
-    it('Se não cria a conta retorna status 409', () => {});
+    it('Ao criar um usuário com sucesso retorna status 201', async () => {});
+    it('Se não cria a conta retorna status 409', async () => {});
   });
 
   describe('Método loginConta', () => {
-    it('Se realiza login com sucesso retorna status 200', () => {});
-    it('Se há erro no login retorna status 404', () => {});
+    it('Se realiza login com sucesso retorna status 200', async () => {});
+    it('Se há erro no login retorna status 404', async () => {});
   });
 });
