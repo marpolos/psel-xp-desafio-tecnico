@@ -1,4 +1,5 @@
-API investimento em ações
+<strong>API investimento em ações</strong>
+</br>
 🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟🌟
 :dizzy::dizzy::dizzy:**************:dizzy::dizzy::dizzy:
 
@@ -26,7 +27,7 @@ Módulos utilizados neste projeto:
 
 ************* :exclamation:
 </br>
-Instruções de uso:
+<strong>Instruções de uso:</strong>
 </br>
 
 * Ao chegar nesse repositório faça o clone para uma pasta em sua máquina -> git clone <link>
@@ -44,7 +45,7 @@ Instruções de uso:
 * Para testar a aplicação crie um segundo banco com nome de testes, como está no env.example. Aqui no repositório tem o arquivo de sql para teste: psel_xp_test. Lembre de sempre alterar no dotenv em qual ambiente você quer estar, test ou dev.
 
 </br>
-*** COMANDOS ***
+*** <strong>COMANDOS</strong> ***
 :pray::pray::pray::pray:
 </br>
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
@@ -111,27 +112,48 @@ https://psel-xp.herokuapp.com/api-docs/#
 * O planejamento leva tempo, mas ele é essencial porque poupa tempo a longo prazo;
   - Na imagem psel-xp.v1.png não tenho a modelagem do banco porque só lembrei na hora de codar;
   - O esquema do banco está na imagem dawSQL;
+ </br></br>
+ 
 * Escolhi trabalhar com classes e typescript e é desafiador porque tem que tipar os retornos e ainda me confundo com os implements, extends e uso do as para retornos. Realmente quero desenvolver essas habilidades e estou me divertindo com o projeto porque estou treinando.
+</br></br>
+
 * Criar controller em classe está sendo desafiador porque só vem undefined, então precisei usar funções para não ficar travada no projeto, mas o objetivo é refatorar assim que terminar de implementar as autenticações e testes.
+</br></br>
+
 * Trabalhar com MSC é uma prática que deixa a aplicação mais robusta e segura porque em cada camada temos uma responsabilidade. No entando, eu fiquei um tempinho para resolver um problema de retorno porque estava olhando a model e só depois lembrei de olhar como estava no service. Eu estava tentando extends uma interface da outra, mas ficou confuso porque as duas possuem keys iguais para entidades diferentes. Por exemplo, id e name tanto na interface ativo, quanto na cliente.
+</br></br>
+
 * Estava confundindo os modelos/contratos das entidades no código com o banco de dados em si, mas ao trabalhar consegui clarear minhas ideias e perceber que tenho a tabela intermediária justamente para ter a liberdade de mexer nas outras duas tabelas.
+</br></br>
+
 * Tomei a liberdade de modificar as rotas e métodos http conforme meu entendimento atual do que me parece correto. No documento de FAQ do processo seletivo dizia que as toas eram sugestões e poderiam ser modificadas.
+</br></br>
+
 * Quando criei os middlewares tive um problema para passá-los nas rotas, dava um conflito no typescript. O retorno do tipo Response nativo não aceitava o middleware. Sinceramente não entendi porque parece que ele só sumiu e começou a passar. Mudei a verdão do typescript para uma inferior, mas isso não adiantou. Daí achei esse link:
 https://wanago.io/2018/12/03/typescript-express-tutorial-routing-controllers-middleware/
 E coloquei o middleware no app.use(), depois disso ele começou a passar nos métodos get, post, put. Pelo que vi no stackOverflow o problema ocorre porque o type do express para rota não consegue ler strings, e a solução era tipar manualmente o response, fiz isso, mas não funcionou.
+</br>
 O problema era esse:
 argument of type '{ validateinvestimentos: (req: request<paramsdictionary, any, any, querystring.parsedqs, record<string, any>>, _res: response<any, record<...>>, next: nextfunction) => void; }' is not assignable to parameter of type 'requesthandlerparams<paramsdictionary, any, any, parsedqs, record<string, any>>'.ts(2769)
+</br></br>
+
 * Fazer o deploy no heroku foi desafiador porque estava dando App crashed. Testei n versões no Profile do heroku, mas nada deu certo. Eu desisti, mas pensei que desistir não é opção. A solução era uma variável de ambiente que precisei mudar para false.
 A solução achei aqui: https://dev.to/rosyshrestha/deploy-nestjs-typescript-app-to-heroku-27e
 E cheguei ali através daqui: https://stackoverflow.com/questions/69592313/herokurouter-at-error-code-h10-desc-app-crashed-method-get-path-error
 O heroku tem uma variável que é setada como default true e faz com que ele só instale dependências, e não as dev. NPM_CONFIG_PRODUCTION. Para mim realmente faz sentido porque devDependency servem para os devs, e não os users.
+</br></br>
+
 * ClearDB:  mysql://b7bde549b8cab4:5810fabc@us-cdbr-east-06.cleardb.net/heroku_f7cd05b49b94cc6?reconnect=true
+</br></br>
+
 * Passei um dia inteiro para subir o banco de dados, motivo: HOST/HOSTNAME -> escrita e eu não percebi porque estava muito ansiosa.
+</br></br>
+
 * Testar é um desafio para mim, especialmente por estar usando o typescript. Usei esse tutorial para clarear minha mente: https://stackoverflow.com/questions/59235639/how-to-mock-response-from-service-for-testing-controller-in-typescript-using-jes
 https://blog.logrocket.com/testing-typescript-apps-using-jest/
 E um vídeo do rockeseat com testes em jest e supertest.
 A melhor forma é ir fazendo e a medida que surge erros vamos buscando soluções.
-
+</br></br>
 b7bde549b8cab4: username
 5810fabc: password
 us-cdbr-east-06.cleardb.net: host
@@ -144,12 +166,16 @@ Email: monteiro.bio@outlook.com
 db4free
 </details>
 <details>
-<summary>Próximos passos</summary>
+<summary><strong>Próximos passos</strong></summary>
 * Encriptar as senhas
+
 * Concluir 100% de cobertura nos testes
+
 * Melhorar a documentação no swagger
 * Dockerizar no heroku
+
 * Criar métodos ainda não contemplados, como deletes e criação de ativos.
+
 * Criar um front
 
 </details>
