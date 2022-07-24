@@ -18,7 +18,7 @@ const schemaInvestimentos = Joi.object({
   }),
 });
 
-// Para quando criar um post de ativos
+// Para quando criar um post de ativos - não usado no momento
 const schemaAtivos = Joi.object({
   codAtivo: Joi.number().min(1),
   nome: Joi.string().min(3).required(),

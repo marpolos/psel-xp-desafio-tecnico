@@ -12,7 +12,6 @@ class ContaService {
   }
 
   public async getAll(): Promise<IService<Cliente>> {
-    // Criei um interface para meu retorno do service que gosto
     const contas = await this.model.getAll();
     if (!contas.length) return { statusCode: 204, message: '' };
 
@@ -24,8 +23,7 @@ class ContaService {
 
   public async getById(id: number): Promise<IService<Cliente>> {
     const conta = await this.model.getById(id);
-
-    // Não existe possibilidade de dar erro aqui porque deu throw na model.
+    
     if (!conta) return { statusCode: 404, message: 'Conta não encontrada' };
     return {
       statusCode: 200,
@@ -35,9 +33,8 @@ class ContaService {
 
   public async atualizarConta(id: number, saldo: number, type: AtualizarConta) {
     const cliente = await this.model.atualizarConta(Number(id), Number(saldo), type);
-    // status 409 indica conflito
-    // Nunca entrará no erro porque o throw é lançado na model.
-    // if (!cliente) return { statusCode: 409, message: 'Problema ao atualizar saldo' };
+    
+    // Todos os erros serão lançados na model por envolverem o banco.
 
     return {
       statusCode: 200,
@@ -49,7 +46,7 @@ class ContaService {
     const token = await this.model.createConta(cliente);
 
     // 409 porque houve algum conflito na criação da conta
-    // Provavelmente nunca entrará aqui porque o model sempre retorna o mesmo.
+    // Entrará aqui se houver um problema no JWT.
     if (!token) return { statusCode: 409, message: 'Problema ao gerar token' };
 
     return {

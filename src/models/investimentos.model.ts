@@ -60,9 +60,9 @@ export default class InvestimentoModel {
 
   public async venderAtivo(data: IAtivoCliente): Promise<IAtivoCliente> {
     const { codAtivo, codCliente, qtde } = data;
+
     // Primeiro, verificar se o cliente está relacionado ao ativo
     const isMatch = await this.matchAtivoCliente(codCliente, codAtivo);
-    // 409 indica algum conflito de informações
     if (!isMatch) throw new HttpException(409, 'Cliente não relacionado ao ativo.');
 
     // Segundo, Verificar se o cliente tem a qtde de ativo para vender
@@ -112,14 +112,10 @@ export default class InvestimentoModel {
 
     // Terceiro, atualizar saldo cliente
     const saque: number = qtde * Number(ativo.valor);
-    // Aqui passo null como type porque quero sacar da conta para comprar o ativo
     await this.contaModel.atualizarConta(codCliente, saque, 'sacar');
     
     // Quarto, verifica se o cliente já tem esse ativo, se não, cria um novo
     const isMatch = await this.matchAtivoCliente(codCliente, codAtivo);
-
-    // Passei esse if para baixo como um else;
-    // if (!isMatch) await this.criarMatch(codCliente, codAtivo, qtde, ativo.valor);
 
     // Quinto, atualizar o match se ele já existe
     if (isMatch) await this.atualizarMatch(codCliente, codAtivo, Number(isMatch.qtde) + qtde);

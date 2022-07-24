@@ -27,9 +27,11 @@ export default class AtivosModel {
   public async getByIdCliente(id: number) {
     const query = 'SELECT * FROM cliente_ativo WHERE id_cliente = ?';
     const [rows] = await this.connection.execute(query, [id]);
+    
     // Aqui não desestruturo direto porque vem [dados, buffer];
-    // Mesmo dados sendo um array eu não consigo percorrê-lo com map porque esse método não existe
-    // aqui no ts que retorna um dataPacket, por isso uso object.
+    // Mesmo dados sendo um array, eu não consigo percorrê-lo com map porque esse método não existe
+    // aqui no ts que retorna um dataPacket.
+
     const ativos = Object.values(rows).map((row) => {
       const {
         id_cliente: codCliente, id_ativo: codAtivo, qtde, valor_ativo: valorAtivo, 

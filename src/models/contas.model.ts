@@ -3,10 +3,8 @@ import Cliente from '../classes/Cliente';
 import { AtualizarConta } from '../interfaces/typeAtualizarConta';
 import { HttpException } from '../middlewares/middleError';
 import { generateToken } from '../utils/jwt';
-// import { HttpException } from '../middlewares/middleError';
 
 export default class ContaModel {
-  // Primeiro eu cria a connection do type poll e inicializo
   public connection: Pool;
 
   constructor(conn: Pool) {
@@ -24,8 +22,7 @@ export default class ContaModel {
     const [rows] = await this.connection.execute(query, [id]);
     const [cliente] = rows as Cliente[];
     
-    // retorna um {} porque é um [[]]
-    // Decidi retirar os as Cliente para tratar tudo no service.
+    // cliente retorna um {} porque é um [[]]
     return cliente;
   }
 
@@ -38,7 +35,6 @@ export default class ContaModel {
     const saldoInDB = Number(cliente.saldo);
     if (type === 'sacar' && saldoInDB < saldo) throw new HttpException(400, 'Saldo insuficiente');
 
-    // Se type vier preenchido então eu quero depositar na conta, somar.
     const newSaldo: number = type === 'depositar' ? saldoInDB + saldo : saldoInDB - saldo; 
     const [upConta] = await this.connection.execute<ResultSetHeader>(query, [newSaldo, id]);
 
@@ -74,9 +70,10 @@ export default class ContaModel {
 
   public async loginConta(cliente: Omit<Cliente, 'codCliente'>) {
     const { nome, senha } = cliente;
+
     // Usei essa fonte para me ajudar: https://dev.to/vitordelfino/autenticacao-com-jwt-22o7
     const alreadyExist = await this.clienteExiste(nome, senha!);
-    // Aqui eu retorno false para dar erro se não encontrar o cliente;
+
     // 404 not found
     if (!alreadyExist) throw new HttpException(404, 'Cliente não encontrado');
       

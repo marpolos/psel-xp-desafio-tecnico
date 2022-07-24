@@ -15,7 +15,7 @@ export default class InvestimentosService {
     // Todos os erros são lançados na model por envolverem o banco.
     // Por segurança deixo o return.
     if (!investimento) return { statusCode: 409, message: 'Problema ao vender ativo' };
-    // if (investimento.message) return { statusCode: 409, message };
+    
     return {
       statusCode: 200,
       data: investimento as IAtivoCliente,
@@ -26,6 +26,7 @@ export default class InvestimentosService {
   Promise<IService<IAtivoCliente>> {
     const data = { codAtivo, codCliente, qtde };
     const investimento = await this.investimentosModel.comprarAtivo(data);
+    
     // Todos os possíveis erros tratados na model por envolverem o banco.
     if (!investimento) return { statusCode: 409, message: 'Problema ao comprar ativo' };
     return {

@@ -57,7 +57,7 @@ Instruções de uso:
 TODAS AS ROTAS EXIGEM TOKEN, EXCETO PARA CRIAR O CLIENTE E LOGAR!
 <strong>Link da documentação da API:</strong>
 </br>
-https://psel-xp.herokuapp.com/api-docs
+https://psel-xp.herokuapp.com/api-docs/#
 
 <strong>Ativos</strong>
 
