@@ -104,6 +104,9 @@
                     },
                     "406": {
                         "description": "Dados não aceitos"
+                    },
+                    "401": {
+                        "description": "Token não autorizado"
                     }
                 }
             }
@@ -133,6 +136,9 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Token não autorizado"
                     }
                 }
             }
@@ -142,7 +148,43 @@
                 "description": "Realizar um saque na conta do usuário",
                 "summary": "Sacar",
                 "tags": ["Contas"],
-                "security": [ { "bearerAuth": [] } ]
+                "security": [ { "bearerAuth": [] } ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/saqueDeposito"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Saque realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "data": {
+                                        "type": "object",
+                                        "$ref": "#/components/schemas/conta"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Problema ao gerar token"
+                    },
+                    "400": {
+                        "description": "Não enviou os dados necessários"
+                    },
+                    "406": {
+                        "description": "Dados não aceitos"
+                    },
+                    "401": {
+                        "description": "Token não autorizado"
+                    }
+                }
             }
         },
         "/contas/deposito": {
@@ -150,14 +192,103 @@
                 "description": "Realizar um depósito na conta do usuário",
                 "summary": "Depósito",
                 "tags": ["Contas"],
-                "security": [ { "bearerAuth": [] } ]
+                "security": [ { "bearerAuth": [] } ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/saqueDeposito"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Saque realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "data": {
+                                        "type": "object",
+                                        "$ref": "#/components/schemas/conta"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Problema ao gerar token"
+                    },
+                    "400": {
+                        "description": "Não enviou os dados necessários"
+                    },
+                    "406": {
+                        "description": "Dados não aceitos"
+                    },
+                    "401": {
+                        "description": "Token não autorizado"
+                    }
+                }
             }
         },
         "/contas/login": {
             "post": {
                 "description": "Logar na conta do usuário cadastrado",
                 "summary": "Login",
-                "tags": ["Contas"]
+                "tags": ["Contas"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/login"
+                            },
+                            "examples": {
+                                "conta": {
+                                    "value": {
+                                        "nome": "Lucky Skywalker",
+                                        "senha": "145dfgt"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login realizado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "data": {
+                                        "type": "object",
+                                        "properties": {
+                                            "token": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "data": {
+                                        "value": {
+                                            "token": "ahhhhhhhhhhhhhhhhhhhhhhhhh"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Problema ao gerar token"
+                    },
+                    "400": {
+                        "description": "Não enviou os dados necessários"
+                    },
+                    "406": {
+                        "description": "Dados não aceitos"
+                    }
+                }
             }
         },
         "/ativos": {
@@ -165,7 +296,28 @@
                 "description": "Busca da lista de ativos disponíveis",
                 "summary": "Lista de ativos",
                 "tags": ["Ativos"],
-                "security": [ { "bearerAuth": [] } ]
+                "security": [ { "bearerAuth": [] } ],
+                "responses": {
+                    "401": {
+                        "description": "Token não autorizado"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ativos"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Sem ativos cadastradas"
+                    }
+                }
             }
         },
         "/ativos/{id}": {
@@ -181,7 +333,27 @@
                         "description": "codAtivo",
                         "required": true
                     }
-                ]
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Token não autorizado"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/ativo"
+                                    
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Sem contas cadastradas"
+                    }
+                }
             }
         },
         "/ativos/cliente/{id}": {
@@ -197,7 +369,29 @@
                         "description": "codCliente",
                         "required": true
                     }
-                ]
+                ],
+                "responses": {
+                    "401": {
+                        "description": "Token não autorizado"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ativo"
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Sem contas cadastradas"
+                    }
+                }
             }
         },
         "/investimentos": {
@@ -205,7 +399,28 @@
                 "description": "Busca da lista de todos os investimentos da corretora",
                 "summary": "Lista de investimentos",
                 "tags": ["Investimentos"],
-                "security": [ { "bearerAuth": [] } ]
+                "security": [ { "bearerAuth": [] } ],
+                "responses": {
+                    "401": {
+                        "description": "Token não autorizado"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/investimento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Sem investimentos na corretora"
+                    }
+                }
             }
         },
         "/investimentos/vender": {
@@ -213,7 +428,40 @@
                 "description": "Vender um ativo do cliente",
                 "summary": "Vender ativo",
                 "tags": ["Investimentos"],
-                "security": [ { "bearerAuth": [] } ]
+                "security": [ { "bearerAuth": [] } ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/compraVendaAtivo"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Venda do ativo realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "data": {
+                                        "type": "object",
+                                        "$ref": "#/components/schemas/investimento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Não enviou os dados necessários"
+                    },
+                    "406": {
+                        "description": "Dados não aceitos"
+                    },
+                    "401": {
+                        "description": "Token não autorizado"
+                    }
+                }
             }
         },
         "/investimentos/comprar": {
@@ -221,7 +469,40 @@
                 "description": "Comprar um ativo para o cliente",
                 "summary": "Comprar ativo",
                 "tags": ["Investimentos"],
-                "security": [ { "bearerAuth": [] } ]
+                "security": [ { "bearerAuth": [] } ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/compraVendaAtivo"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Venda do ativo realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "data": {
+                                        "type": "object",
+                                        "$ref": "#/components/schemas/investimento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Não enviou os dados necessários"
+                    },
+                    "406": {
+                        "description": "Dados não aceitos"
+                    },
+                    "401": {
+                        "description": "Token não autorizado"
+                    }
+                }
             }
         }
     },
@@ -307,6 +588,20 @@
                         "type": "number"
                     },
                     "valorAtivo": {
+                        "type": "number"
+                    }
+                }
+            },
+            "compraVendaAtivo": {
+                "type": "object",
+                "properties": {
+                    "codCliente": {
+                        "type": "string"
+                    },
+                    "codAtivo": {
+                        "type": "string"
+                    },
+                    "qtde": {
                         "type": "number"
                     }
                 }
