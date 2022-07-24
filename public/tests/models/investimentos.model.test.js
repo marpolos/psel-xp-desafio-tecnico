@@ -40,10 +40,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var connection_1 = __importDefault(require("../../db/connection"));
+var contas_model_1 = __importDefault(require("../../models/contas.model"));
 var investimentos_model_1 = __importDefault(require("../../models/investimentos.model"));
 var mocks_1 = require("../mocks");
-describe.skip('Testa o model dos investimentos', function () {
+describe('Testa o model dos investimentos', function () {
     var model = new investimentos_model_1.default(connection_1.default);
+    var modelCliente = new contas_model_1.default(connection_1.default);
     describe('Método matchAtivoCliente', function () {
         it('Ao enviar codCliente e codAtivo relacionados retorna um único objeto', function () { return __awaiter(void 0, void 0, void 0, function () {
             var response;
@@ -66,21 +68,52 @@ describe.skip('Testa o model dos investimentos', function () {
                     case 0: return [4 /*yield*/, model.matchAtivoCliente(mocks_1.ID, mocks_1.ID_INVALID)];
                     case 1:
                         response = _a.sent();
-                        expect(typeof response).toBe('object');
-                        expect(response).not.toHaveProperty('id_ativo');
-                        expect(response).not.toHaveProperty('id_cliente');
+                        expect(response).not.toBeDefined();
                         return [2 /*return*/];
                 }
             });
         }); });
     });
-    describe('Método criarMatch', function () {
-        it('Ao enviar codCliente e codAtivo verifica se estão relacionados', function () { });
+    describe('Método venderAtivo', function () {
+        it('SUCESS - ao enviar codAtivo, codCliente e qtde o cliente vende um ativo e seu saldo aumenta', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var saldo, data, newSaldo;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, modelCliente.getById(mocks_1.ID)];
+                    case 1:
+                        saldo = (_a.sent()).saldo;
+                        data = { codCliente: mocks_1.ID, codAtivo: mocks_1.ID, qtde: mocks_1.QTDE };
+                        return [4 /*yield*/, model.venderAtivo(data)];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, modelCliente.getById(mocks_1.ID)];
+                    case 3:
+                        newSaldo = (_a.sent()).saldo;
+                        expect(Number(saldo)).toBeLessThan(Number(newSaldo));
+                        return [2 /*return*/];
+                }
+            });
+        }); });
     });
-    describe('Método atualizarMatch', function () {
-        it('Ao enviar codCliente e codAtivo válidos atualiza uma relação', function () { });
+    describe('Método comprarAtivo', function () {
+        it('SUCESS - ao enviar codAtivo, codCliente e qtde o cliente compra um ativo e seu saldo diminui', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var saldo, data, newSaldo;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, modelCliente.getById(mocks_1.ID)];
+                    case 1:
+                        saldo = (_a.sent()).saldo;
+                        data = { codCliente: mocks_1.ID, codAtivo: mocks_1.ID, qtde: mocks_1.QTDE };
+                        return [4 /*yield*/, model.comprarAtivo(data)];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, modelCliente.getById(mocks_1.ID)];
+                    case 3:
+                        newSaldo = (_a.sent()).saldo;
+                        expect(Number(saldo)).toBeGreaterThan(Number(newSaldo));
+                        return [2 /*return*/];
+                }
+            });
+        }); });
     });
-    describe('Método venderAtivo', function () { });
-    describe('Método comprarAtivo', function () { });
-    describe('Método listarInvestimento', function () { });
 });

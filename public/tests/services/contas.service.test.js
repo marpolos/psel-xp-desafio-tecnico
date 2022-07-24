@@ -161,16 +161,12 @@ describe.skip('Testa o service das contas', function () {
             });
         }); });
         it('Ao enviar um usuário que já existe retorna status 409 e message', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, contas_service_1.default.createConta(mocks_1.NEW_CLIENTE)];
+                    case 0: return [4 /*yield*/, expect(contas_service_1.default.createConta(mocks_1.NEW_CLIENTE))
+                            .rejects.toThrowError()];
                     case 1:
-                        response = _a.sent();
-                        expect(response).toHaveProperty('statusCode');
-                        expect(response).not.toHaveProperty('data');
-                        expect(response).toHaveProperty('message');
-                        expect(response.statusCode).toBe(409);
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });

@@ -85,9 +85,7 @@ describe.skip('Testa o model das contas', function () {
                     case 1:
                         response = _a.sent();
                         console.log('response/contas/model/getById', response);
-                        expect(response).not.toHaveProperty('id');
-                        expect(response).not.toHaveProperty('nome');
-                        expect(response).not.toHaveProperty('saldo');
+                        expect(response).not.toBeDefined();
                         return [2 /*return*/];
                 }
             });

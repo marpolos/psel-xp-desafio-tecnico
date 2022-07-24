@@ -1,7 +1,7 @@
 import AtivosService from '../../services/ativos.service';
 import { ID, ID_INVALID } from '../mocks';
 
-describe.skip('Testa o service dos ativos', () => {
+describe('Testa o service dos ativos', () => {
   const service: AtivosService = new AtivosService();
 
   /* beforeAll(() => {

@@ -3,7 +3,7 @@
 module.exports = {
     preset: 'ts-jest',
     testEnvironment: 'node',
-    moduleFileExtensions: ['ts'],
-    testPathDirs: ['./src/tests'],
+    moduleFileExtensions: ['js', 'ts', 'tsx'],
+    roots: ['./src/tests'],
     verbose: true,
 };

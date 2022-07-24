@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import ativosController from '../../controllers/ativos.controller';
 import { ID, ID_INVALID } from '../mocks';
 
-describe.skip('Testa o controller dos ativos', () => {
+describe('Testa o controller dos ativos', () => {
   describe('Função getAll', () => {
     it('Retorna status 200 e um json', async () => {
       const mReq = {

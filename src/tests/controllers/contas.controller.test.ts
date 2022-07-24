@@ -20,7 +20,7 @@ import {
   return { contasService: jest.fn(() => serviceMock) };
 }); */
 
-describe.skip('Testa o controller das contas', () => {
+describe('Testa o controller das contas', () => {
   /* afterEach(() => {
     jest.resetAllMocks();
   }); */

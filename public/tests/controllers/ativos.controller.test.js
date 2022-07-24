@@ -110,7 +110,6 @@ describe.skip('Testa o controller dos ativos', function () {
                                 .getById(mReq, mRes, mNext)];
                     case 1:
                         _a.sent();
-                        expect(mRes).not.toBeCalled();
                         expect(mNext).toBeCalled();
                         return [2 /*return*/];
                 }

@@ -5,7 +5,7 @@ import {
   COMPRAR, ID, ID_INVALID, QTDE, VENDER,
 } from '../mocks';
 
-describe.skip('Testa o model dos ativos', () => {
+describe('Testa o model dos ativos', () => {
   const model: AtivosModel = new AtivosModel(connection);
 
   /* beforeAll(() => {
