@@ -130,6 +130,7 @@ O heroku tem uma variável que é setada como default true e faz com que ele só
 * Testar é um desafio para mim, especialmente por estar usando o typescript. Usei esse tutorial para clarear minha mente: https://stackoverflow.com/questions/59235639/how-to-mock-response-from-service-for-testing-controller-in-typescript-using-jes
 https://blog.logrocket.com/testing-typescript-apps-using-jest/
 E um vídeo do rockeseat com testes em jest e supertest.
+A melhor forma é ir fazendo e a medida que surge erros vamos buscando soluções.
 
 b7bde549b8cab4: username
 5810fabc: password
@@ -141,5 +142,15 @@ Banco de dados: psel_xp_db_free
 Nome de usuário: marpolos
 Email: monteiro.bio@outlook.com
 db4free
+</details>
+<details>
+<summary>Próximos passos</summary>
+* Encriptar as senhas
+* Concluir 100% de cobertura nos testes
+* Melhorar a documentação no swagger
+* Dockerizar no heroku
+* Criar métodos ainda não contemplados, como deletes e criação de ativos.
+* Criar um front
+
 </details>
 
