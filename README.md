@@ -49,8 +49,11 @@ Módulos utilizados neste projeto:
 :pray::pray::pray::pray:
 </br>
 - npm start -> roda a aplicação localmente com ts-node na porta 3002: http://localhost:3002/
-- npm run test -> roda a cobertura de testes
+
+- npm run test:coverage -> roda a cobertura de testes
+
 - npm run test:watch -> verifica testes um a um, sem mostrar a cobertura.
+
 
 ************** :white_flower:
 <details>
