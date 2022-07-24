@@ -65,7 +65,7 @@ var mocks_1 = require("../mocks");
   };
   return { contasService: jest.fn(() => serviceMock) };
 }); */
-describe('Testa o controller das contas', function () {
+describe.skip('Testa o controller das contas', function () {
     /* afterEach(() => {
       jest.resetAllMocks();
     }); */
@@ -133,10 +133,12 @@ describe('Testa o controller das contas', function () {
                             json: jest.fn(),
                         };
                         mNext = function () { };
-                        return [4 /*yield*/, expect(contas_controller_1.default
-                                .getById(mReq, mRes, mNext)).rejects.toEqual(new middleError_1.HttpException(404, 'Cliente não encontrado.'))];
+                        return [4 /*yield*/, contas_controller_1.default
+                                .getById(mReq, mRes, mNext)];
                     case 1:
                         _a.sent();
+                        expect(mRes.status).toBeCalledWith(404);
+                        expect(mRes.json).toBeCalled();
                         return [2 /*return*/];
                 }
             });
@@ -232,6 +234,29 @@ describe('Testa o controller das contas', function () {
                         expect(mRes.status).toBeCalledWith(201);
                         expect(mRes.json.mock.lastCall[0].token).toBeDefined();
                         expect(mNext).not.toBeCalled();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        it('Se não cria a conta, retorna status 409', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var mReq, mRes, mNext;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        mReq = {
+                            body: mocks_1.NEW_CLIENTE,
+                        };
+                        mRes = {
+                            status: jest.fn().mockReturnThis(),
+                            json: jest.fn(),
+                        };
+                        mNext = jest.fn();
+                        return [4 /*yield*/, contas_controller_1.default
+                                .createConta(mReq, mRes, mNext)];
+                    case 1:
+                        _a.sent();
+                        expect(mRes.status).toBeCalledWith(409);
+                        expect(mRes.json.mock.lastCall[0].token).not.toBeDefined();
                         return [2 /*return*/];
                 }
             });

@@ -1,5 +1,5 @@
-describe('Testa o service dos investimentos', () => {
+/* describe('Testa o controller dos investimentos', () => {
   describe('Método venderAtivo', () => {});
   describe('Método comprarAtivo', () => {});
   describe('Método listarInvestimento', () => {});
-});
+}); */

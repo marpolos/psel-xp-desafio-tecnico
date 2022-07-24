@@ -78,12 +78,18 @@ describe('Testa o model dos ativos', function () {
                 }
             });
         }); });
-        it('Quando envia um id inválido lança um erro', function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('Quando envia um id inválido retorna um objeto vazio', function () { return __awaiter(void 0, void 0, void 0, function () {
+            var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, expect(model.getById(mocks_1.ID_INVALID)).rejects.toEqual(new middleError_1.HttpException(404, 'Ativo não encontrado.'))];
+                    case 0: return [4 /*yield*/, model.getById(mocks_1.ID_INVALID)];
                     case 1:
-                        _a.sent();
+                        response = _a.sent();
+                        console.log('ativos/model', response);
+                        expect(response).not.toHaveProperty('id');
+                        expect(response).not.toHaveProperty('nome');
+                        expect(response).not.toHaveProperty('valor');
+                        expect(response).not.toHaveProperty('qtde');
                         return [2 /*return*/];
                 }
             });
