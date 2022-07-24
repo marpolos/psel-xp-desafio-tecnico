@@ -41,13 +41,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var ativos_service_1 = __importDefault(require("../services/ativos.service"));
 var ativosService = new ativos_service_1.default();
-var getAll = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, statusCode, data;
+var getAll = function (_req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, statusCode, data, message;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0: return [4 /*yield*/, ativosService.getAll()];
             case 1:
-                _a = _b.sent(), statusCode = _a.statusCode, data = _a.data;
+                _a = _b.sent(), statusCode = _a.statusCode, data = _a.data, message = _a.message;
+                if (message) {
+                    return [2 /*return*/, next({
+                            statusCode: statusCode,
+                            message: message,
+                        })];
+                }
                 return [2 /*return*/, res.status(statusCode).json(data)];
         }
     });

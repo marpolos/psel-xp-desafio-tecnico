@@ -41,25 +41,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var investimentos_service_1 = __importDefault(require("../services/investimentos.service"));
 var investimentosService = new investimentos_service_1.default();
-/* class InvestimentosController {
-  constructor(private investimentosService = new InvestimentosService()) {}
-
-  public venderAtivo = async (req: Request, res: Response, next: NextFunction) => {
-    const { id_ativo, id_cliente, qtde } = req.body;
-    const { statusCode, data, message } = await this.investimentosService
-      .venderAtivo(id_ativo, id_cliente, qtde);
-
-    if (message) {
-      return next({
-        statusCode,
-        message,
-      });
-    }
-    return res.status(statusCode).json(data);
-  };
-}
-
-export default InvestimentosController; */
 var venderAtivo = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, codAtivo, codCliente, qtde, _b, statusCode, data, message;
     return __generator(this, function (_c) {

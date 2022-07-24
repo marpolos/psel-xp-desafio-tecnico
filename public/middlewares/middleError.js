@@ -16,7 +16,6 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpException = void 0;
-// Criar esse arquivo no futuro com enum: import { HttpStatus } from '../enums/httpStatus.enum';
 var HttpException = /** @class */ (function (_super) {
     __extends(HttpException, _super);
     function HttpException(status, message) {

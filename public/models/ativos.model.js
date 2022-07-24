@@ -67,8 +67,6 @@ var AtivosModel = /** @class */ (function () {
                     case 1:
                         rows = (_a.sent())[0];
                         ativo = rows[0];
-                        if (!ativo)
-                            throw new middleError_1.HttpException(404, 'Ativo não encontrado.');
                         return [2 /*return*/, ativo];
                 }
             });

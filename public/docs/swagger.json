@@ -10,11 +10,11 @@
         "version": "1.0.0"
     },
     "servers": [
-        { 
+        {
             "url": "http://localhost:3002/",
             "description": "Base para testes"
         },
-        { 
+        {
             "url": "https://psel-xp.herokuapp.com/",
             "description": "Base para produção"
         }
@@ -25,7 +25,7 @@
                 "summary": "Listar todas as contas cadastradas",
                 "description": "A rota retorna todos os clientes cadastrados na base",
                 "tags": ["Contas"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "responses": {
                     "401": {
                         "description": "Token não autorizado"
@@ -66,7 +66,6 @@
                                         "senha": "145dfgt"
                                     }
                                 }
-
                             }
                         }
                     }
@@ -116,7 +115,7 @@
                 "description": "Busca de uma conta pelo id",
                 "summary": "Busca pelo código do cliente",
                 "tags": ["Contas"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "parameters": [
                     {
                         "name": "id",
@@ -148,7 +147,7 @@
                 "description": "Realizar um saque na conta do usuário",
                 "summary": "Sacar",
                 "tags": ["Contas"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -192,7 +191,7 @@
                 "description": "Realizar um depósito na conta do usuário",
                 "summary": "Depósito",
                 "tags": ["Contas"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -249,7 +248,6 @@
                                         "senha": "145dfgt"
                                     }
                                 }
-
                             }
                         }
                     }
@@ -296,7 +294,7 @@
                 "description": "Busca da lista de ativos disponíveis",
                 "summary": "Lista de ativos",
                 "tags": ["Ativos"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "responses": {
                     "401": {
                         "description": "Token não autorizado"
@@ -325,7 +323,7 @@
                 "description": "Busca de um ativo pelo id",
                 "summary": "Encontrar um ativo",
                 "tags": ["Ativos"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "parameters": [
                     {
                         "name": "id",
@@ -345,7 +343,6 @@
                                 "schema": {
                                     "type": "object",
                                     "$ref": "#/components/schemas/ativo"
-                                    
                                 }
                             }
                         }
@@ -361,7 +358,7 @@
                 "description": "Busca da lista de ativos que um cliente tem",
                 "summary": "Ativos de um cliente",
                 "tags": ["Ativos"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "parameters": [
                     {
                         "name": "id",
@@ -383,7 +380,6 @@
                                     "items": {
                                         "$ref": "#/components/schemas/ativo"
                                     }
-                                    
                                 }
                             }
                         }
@@ -399,7 +395,7 @@
                 "description": "Busca da lista de todos os investimentos da corretora",
                 "summary": "Lista de investimentos",
                 "tags": ["Investimentos"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "responses": {
                     "401": {
                         "description": "Token não autorizado"
@@ -428,7 +424,7 @@
                 "description": "Vender um ativo do cliente",
                 "summary": "Vender ativo",
                 "tags": ["Investimentos"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -469,7 +465,7 @@
                 "description": "Comprar um ativo para o cliente",
                 "summary": "Comprar ativo",
                 "tags": ["Investimentos"],
-                "security": [ { "bearerAuth": [] } ],
+                "security": [{ "bearerAuth": [] }],
                 "requestBody": {
                     "content": {
                         "application/json": {

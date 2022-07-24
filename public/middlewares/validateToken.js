@@ -59,6 +59,7 @@ exports.default = (function (req, res, next) { return __awaiter(void 0, void 0, 
                 return [3 /*break*/, 4];
             case 3:
                 err_1 = _a.sent();
+                // 401 não autorizado
                 throw new middleError_1.HttpException(401, 'Token expirado ou inválido.');
             case 4: return [2 /*return*/];
         }

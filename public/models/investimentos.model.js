@@ -77,6 +77,7 @@ var InvestimentoModel = /** @class */ (function () {
                     case 1:
                         result = _a.sent();
                         dataInserted = result[0];
+                        // 409 conflit
                         if (dataInserted.affectedRows === 0)
                             throw new middleError_1.HttpException(409, 'Erro ao atualizar relação do cliente com ativo.');
                         return [2 /*return*/, {
@@ -121,7 +122,6 @@ var InvestimentoModel = /** @class */ (function () {
                         return [4 /*yield*/, this.matchAtivoCliente(codCliente, codAtivo)];
                     case 1:
                         isMatch = _a.sent();
-                        // 409 indica algum conflito de informações
                         if (!isMatch)
                             throw new middleError_1.HttpException(409, 'Cliente não relacionado ao ativo.');
                         qtdeCliente = Number(isMatch.qtde) >= qtde;
@@ -166,20 +166,23 @@ var InvestimentoModel = /** @class */ (function () {
                         return [4 /*yield*/, this.ativosModel.getById(codAtivo)];
                     case 1:
                         ativo = _a.sent();
+                        if (!ativo)
+                            throw new middleError_1.HttpException(404, 'Ativo não encontrado.');
                         qtdeAtivo = Number(ativo.qtde);
                         if (qtde > qtdeAtivo)
                             throw new middleError_1.HttpException(409, 'Quantidade de ativo maior que a disponível.');
                         return [4 /*yield*/, this.contaModel.getById(codCliente)];
                     case 2:
                         saldoCliente = _a.sent();
+                        console.log('verifica cliente', saldoCliente);
+                        if (!saldoCliente)
+                            throw new middleError_1.HttpException(404, 'Cliente não encontrado.');
                         saldo = Number(saldoCliente.saldo);
                         if (saldo < qtde * Number(ativo.valor))
                             throw new middleError_1.HttpException(409, 'Cliente não tem saldo para comprar o ativo.');
                         saque = qtde * Number(ativo.valor);
-                        // Aqui passo null como type porque quero sacar da conta para comprar o ativo
                         return [4 /*yield*/, this.contaModel.atualizarConta(codCliente, saque, 'sacar')];
                     case 3:
-                        // Aqui passo null como type porque quero sacar da conta para comprar o ativo
                         _a.sent();
                         return [4 /*yield*/, this.matchAtivoCliente(codCliente, codAtivo)];
                     case 4:

@@ -40,29 +40,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var contas_service_1 = __importDefault(require("../services/contas.service"));
-/* class ContaController {
-  constructor(public _contaService = new ContaService()) {}
-
-  public async getAll(_req: Request, res: Response) {
-    console.log('service', this._contaService);
-    console.log('entrei aqui');
-    const teste = new ContaService();
-    console.log('teste', teste);
-    const data = await this._contaService.getAll();
-    return res.status(200).json(data);
-  }
-}
-
-// Aqui vou exportar instanciada para título de estudo.
-
-export default new ContaController(); */
-var getAll = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, statusCode, data;
+var getAll = function (_req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, statusCode, data, message;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0: return [4 /*yield*/, contas_service_1.default.getAll()];
             case 1:
-                _a = _b.sent(), statusCode = _a.statusCode, data = _a.data;
+                _a = _b.sent(), statusCode = _a.statusCode, data = _a.data, message = _a.message;
+                if (message) {
+                    return [2 /*return*/, next({
+                            statusCode: statusCode,
+                            message: message,
+                        })];
+                }
                 return [2 /*return*/, res.status(statusCode).json(data)];
         }
     });
@@ -86,8 +76,8 @@ var getById = function (req, res, next) { return __awaiter(void 0, void 0, void 
         }
     });
 }); };
-var atualizarConta = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var type, _a, codCliente, saldo, _b, statusCode, data, message;
+var atualizarConta = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var type, _a, codCliente, saldo, _b, statusCode, data;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
@@ -96,13 +86,7 @@ var atualizarConta = function (req, res, next) { return __awaiter(void 0, void 0
                 return [4 /*yield*/, contas_service_1.default
                         .atualizarConta(Number(codCliente), Number(saldo), type)];
             case 1:
-                _b = _c.sent(), statusCode = _b.statusCode, data = _b.data, message = _b.message;
-                if (message) {
-                    return [2 /*return*/, next({
-                            statusCode: statusCode,
-                            message: message,
-                        })];
-                }
+                _b = _c.sent(), statusCode = _b.statusCode, data = _b.data;
                 return [2 /*return*/, res.status(statusCode).json(data)];
         }
     });

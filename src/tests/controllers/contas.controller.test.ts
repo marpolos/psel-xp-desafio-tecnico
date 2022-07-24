@@ -97,18 +97,15 @@ describe('Testa o controller das contas', () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       };
-      const mNext = jest.fn();
 
       await contasController
         .atualizarConta(
           mReq as unknown as Request, 
           mRes as unknown as Response,
-          mNext as NextFunction,
         );
       
       expect(mRes.status).toBeCalledWith(200);
       expect(mRes.json).toBeCalled();
-      expect(mNext).not.toBeCalled();
     });
 
     it('Se envia um id inválido retorna status 404 e uma message', async () => {
@@ -126,7 +123,6 @@ describe('Testa o controller das contas', () => {
         .atualizarConta(
           mReq as unknown as Request, 
           mRes as unknown as Response,
-          mNext as NextFunction,
         )).rejects.toEqual(
         new HttpException(404, 'Cliente não encontrado.'),
       );
@@ -146,7 +142,6 @@ describe('Testa o controller das contas', () => {
         .atualizarConta(
           mReq as unknown as Request, 
           mRes as unknown as Response,
-          mNext as NextFunction,
         )).rejects.toThrowError();
     });
   });

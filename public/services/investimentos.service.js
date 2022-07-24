@@ -60,9 +60,10 @@ var InvestimentosService = /** @class */ (function () {
                         return [4 /*yield*/, this.investimentosModel.venderAtivo(data)];
                     case 1:
                         investimento = _a.sent();
+                        // Todos os erros são lançados na model por envolverem o banco.
+                        // Por segurança deixo o return.
                         if (!investimento)
                             return [2 /*return*/, { statusCode: 409, message: 'Problema ao vender ativo' }];
-                        // if (investimento.message) return { statusCode: 409, message };
                         return [2 /*return*/, {
                                 statusCode: 200,
                                 data: investimento,
@@ -81,6 +82,7 @@ var InvestimentosService = /** @class */ (function () {
                         return [4 /*yield*/, this.investimentosModel.comprarAtivo(data)];
                     case 1:
                         investimento = _a.sent();
+                        // Todos os possíveis erros tratados na model por envolverem o banco.
                         if (!investimento)
                             return [2 /*return*/, { statusCode: 409, message: 'Problema ao comprar ativo' }];
                         return [2 /*return*/, {
@@ -99,8 +101,8 @@ var InvestimentosService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.investimentosModel.listaInvestimentos()];
                     case 1:
                         investimentos = _a.sent();
-                        if (investimentos.length === 0)
-                            return [2 /*return*/, { statusCode: 204, message: 'Nenhum investimento realizado na corretora.' }];
+                        if (!investimentos.length)
+                            return [2 /*return*/, { statusCode: 204, message: '' }];
                         return [2 /*return*/, {
                                 statusCode: 200,
                                 data: investimentos,

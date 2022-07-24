@@ -38,7 +38,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var middleError_1 = require("../middlewares/middleError");
 var jwt_1 = require("../utils/jwt");
-// import { HttpException } from '../middlewares/middleError';
 var ContaModel = /** @class */ (function () {
     function ContaModel(conn) {
         this.connection = conn;
@@ -69,10 +68,7 @@ var ContaModel = /** @class */ (function () {
                     case 1:
                         rows = (_a.sent())[0];
                         cliente = rows[0];
-                        if (!cliente)
-                            throw new middleError_1.HttpException(404, 'Cliente não encontrado.');
-                        // retorna um {} porque é um [[]]
-                        // Decidi retirar os as Cliente para tratar tudo no service.
+                        // cliente retorna um {} porque é um [[]]
                         return [2 /*return*/, cliente];
                 }
             });
@@ -107,16 +103,38 @@ var ContaModel = /** @class */ (function () {
             });
         });
     };
+    ContaModel.prototype.clienteExiste = function (nome, senha) {
+        return __awaiter(this, void 0, void 0, function () {
+            var query, clienteExiste, find;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        query = 'SELECT * FROM cliente WHERE nome=? AND senha=?';
+                        return [4 /*yield*/, this.connection.execute(query, [nome, senha])];
+                    case 1:
+                        clienteExiste = (_a.sent())[0];
+                        find = clienteExiste[0];
+                        return [2 /*return*/, find];
+                }
+            });
+        });
+    };
     ContaModel.prototype.createConta = function (cliente) {
         return __awaiter(this, void 0, void 0, function () {
-            var query, nome, saldo, senha, token;
+            var query, nome, saldo, senha, alreadyExist, token;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         query = 'INSERT INTO cliente (nome, saldo, senha) VALUES (?, ?, ?)';
                         nome = cliente.nome, saldo = cliente.saldo, senha = cliente.senha;
-                        return [4 /*yield*/, this.connection.execute(query, [nome, saldo, senha])];
+                        return [4 /*yield*/, this.clienteExiste(nome, senha)];
                     case 1:
+                        alreadyExist = _a.sent();
+                        // 400 bad request
+                        if (alreadyExist)
+                            throw new middleError_1.HttpException(400, 'Cliente já existe.');
+                        return [4 /*yield*/, this.connection.execute(query, [nome, saldo, senha])];
+                    case 2:
                         _a.sent();
                         token = (0, jwt_1.generateToken)(cliente);
                         return [2 /*return*/, token];
@@ -126,20 +144,18 @@ var ContaModel = /** @class */ (function () {
     };
     ContaModel.prototype.loginConta = function (cliente) {
         return __awaiter(this, void 0, void 0, function () {
-            var nome, senha, query, clienteExiste, find, token;
+            var nome, senha, alreadyExist, token;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         nome = cliente.nome, senha = cliente.senha;
-                        query = 'SELECT * FROM cliente WHERE nome = ? AND senha = ?';
-                        return [4 /*yield*/, this.connection.execute(query, [nome, senha])];
+                        return [4 /*yield*/, this.clienteExiste(nome, senha)];
                     case 1:
-                        clienteExiste = (_a.sent())[0];
-                        find = clienteExiste[0];
-                        // Aqui eu retorno false para dar erro se não encontrar o cliente;
-                        if (!find)
+                        alreadyExist = _a.sent();
+                        // 404 not found
+                        if (!alreadyExist)
                             throw new middleError_1.HttpException(404, 'Cliente não encontrado');
-                        token = (0, jwt_1.generateToken)(find);
+                        token = (0, jwt_1.generateToken)(alreadyExist);
                         return [2 /*return*/, token];
                 }
             });

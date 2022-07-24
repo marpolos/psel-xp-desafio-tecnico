@@ -20,9 +20,6 @@ app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-/* const swaggerDoc = swaggerJSDoc(swaggerConfig);
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc)); */
-
 app.use('/contas', contasRoutes);
 
 app.use('/ativos', validateToken, ativosRoutes);

@@ -23,7 +23,7 @@ var schemaInvestimentos = joi_1.default.object({
     }),
 });
 exports.schemaInvestimentos = schemaInvestimentos;
-// Para quando criar um post de ativos
+// Para quando criar um post de ativos - não usado no momento
 var schemaAtivos = joi_1.default.object({
     codAtivo: joi_1.default.number().min(1),
     nome: joi_1.default.string().min(3).required(),

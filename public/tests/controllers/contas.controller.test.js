@@ -71,7 +71,7 @@ describe('Testa o controller das contas', function () {
     }); */
     describe('Método getAll', function () {
         it('Retorna status 200 e um json no response', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var mReq, mRes;
+            var mReq, mRes, mNext;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -82,8 +82,9 @@ describe('Testa o controller das contas', function () {
                             status: jest.fn().mockReturnThis(),
                             json: jest.fn(),
                         };
+                        mNext = jest.fn();
                         return [4 /*yield*/, contas_controller_1.default
-                                .getAll(mReq, mRes)];
+                                .getAll(mReq, mRes, mNext)];
                     case 1:
                         _a.sent();
                         expect(mRes.status).toBeCalledWith(200);
@@ -143,7 +144,7 @@ describe('Testa o controller das contas', function () {
     });
     describe('Método atualizarConta', function () {
         it('Se envia id e saldo válidos retorna status 200 e um json - saque', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var mReq, mRes, mNext;
+            var mReq, mRes;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -155,14 +156,12 @@ describe('Testa o controller das contas', function () {
                             status: jest.fn().mockReturnThis(),
                             json: jest.fn(),
                         };
-                        mNext = jest.fn();
                         return [4 /*yield*/, contas_controller_1.default
-                                .atualizarConta(mReq, mRes, mNext)];
+                                .atualizarConta(mReq, mRes)];
                     case 1:
                         _a.sent();
                         expect(mRes.status).toBeCalledWith(200);
                         expect(mRes.json).toBeCalled();
-                        expect(mNext).not.toBeCalled();
                         return [2 /*return*/];
                 }
             });
@@ -182,7 +181,7 @@ describe('Testa o controller das contas', function () {
                         };
                         mNext = jest.fn();
                         return [4 /*yield*/, expect(contas_controller_1.default
-                                .atualizarConta(mReq, mRes, mNext)).rejects.toEqual(new middleError_1.HttpException(404, 'Cliente não encontrado.'))];
+                                .atualizarConta(mReq, mRes)).rejects.toEqual(new middleError_1.HttpException(404, 'Cliente não encontrado.'))];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];
@@ -204,7 +203,7 @@ describe('Testa o controller das contas', function () {
                         };
                         mNext = jest.fn();
                         return [4 /*yield*/, expect(contas_controller_1.default
-                                .atualizarConta(mReq, mRes, mNext)).rejects.toThrowError()];
+                                .atualizarConta(mReq, mRes)).rejects.toThrowError()];
                     case 1:
                         _a.sent();
                         return [2 /*return*/];

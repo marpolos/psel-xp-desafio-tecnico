@@ -54,7 +54,7 @@ var ContaService = /** @class */ (function () {
                     case 1:
                         contas = _a.sent();
                         if (!contas.length)
-                            return [2 /*return*/, { statusCode: 204, message: 'Nenhuma conta encontrada' }];
+                            return [2 /*return*/, { statusCode: 204, message: '' }];
                         return [2 /*return*/, {
                                 statusCode: 200,
                                 data: contas,
@@ -71,7 +71,6 @@ var ContaService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.model.getById(id)];
                     case 1:
                         conta = _a.sent();
-                        // Não existe possibilidade de dar erro aqui porque deu throw na model.
                         if (!conta)
                             return [2 /*return*/, { statusCode: 404, message: 'Conta não encontrada' }];
                         return [2 /*return*/, {
@@ -90,10 +89,7 @@ var ContaService = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.model.atualizarConta(Number(id), Number(saldo), type)];
                     case 1:
                         cliente = _a.sent();
-                        // status 409 indica conflito
-                        // Nunca entrará no erro porque o throw é lançado na model.
-                        if (!cliente)
-                            return [2 /*return*/, { statusCode: 409, message: 'Problema ao atualizar saldo' }];
+                        // Todos os erros serão lançados na model por envolverem o banco.
                         return [2 /*return*/, {
                                 statusCode: 200,
                                 data: cliente,
@@ -111,9 +107,9 @@ var ContaService = /** @class */ (function () {
                     case 1:
                         token = _a.sent();
                         // 409 porque houve algum conflito na criação da conta
-                        // Provavelmente nunca entrará aqui porque o model sempre retorna o mesmo.
+                        // Entrará aqui se houver um problema no JWT.
                         if (!token)
-                            return [2 /*return*/, { statusCode: 409, message: 'Problema ao criar conta' }];
+                            return [2 /*return*/, { statusCode: 409, message: 'Problema ao gerar token' }];
                         return [2 /*return*/, {
                                 statusCode: 201,
                                 data: token,
@@ -131,7 +127,7 @@ var ContaService = /** @class */ (function () {
                     case 1:
                         token = _a.sent();
                         if (!token)
-                            return [2 /*return*/, { statusCode: 404, message: 'Conta não encontrada' }];
+                            return [2 /*return*/, { statusCode: 409, message: 'Problema ao gerar token' }];
                         return [2 /*return*/, {
                                 statusCode: 200,
                                 data: token,

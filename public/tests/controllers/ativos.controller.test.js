@@ -45,7 +45,7 @@ var mocks_1 = require("../mocks");
 describe('Testa o controller dos ativos', function () {
     describe('Função getAll', function () {
         it('Retorna status 200 e um json', function () { return __awaiter(void 0, void 0, void 0, function () {
-            var mReq, mRes;
+            var mReq, mRes, mNext;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -56,8 +56,9 @@ describe('Testa o controller dos ativos', function () {
                             status: jest.fn().mockReturnThis(),
                             json: jest.fn(),
                         };
+                        mNext = jest.fn();
                         return [4 /*yield*/, ativos_controller_1.default
-                                .getAll(mReq, mRes)];
+                                .getAll(mReq, mRes, mNext)];
                     case 1:
                         _a.sent();
                         expect(mRes.status).toBeCalledWith(200);
@@ -81,7 +82,7 @@ describe('Testa o controller dos ativos', function () {
                             status: jest.fn().mockReturnThis(),
                             json: jest.fn(),
                         };
-                        mNext = function () { };
+                        mNext = jest.fn();
                         return [4 /*yield*/, ativos_controller_1.default
                                 .getById(mReq, mRes, mNext)];
                     case 1:
@@ -140,7 +141,7 @@ describe('Testa o controller dos ativos', function () {
                 }
             });
         }); });
-        it('Se o cliente não tem ativos retorna um status 204 de no content e uma message', function () { return __awaiter(void 0, void 0, void 0, function () {
+        it('Se o cliente não tem ativos retorna um status 204 e no content', function () { return __awaiter(void 0, void 0, void 0, function () {
             var mReq, mRes, mNext;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -158,7 +159,7 @@ describe('Testa o controller dos ativos', function () {
                                 .getByIdCliente(mReq, mRes, mNext)];
                     case 1:
                         _a.sent();
-                        expect(mRes).toBeCalledWith(204);
+                        expect(mRes.status).toBeCalledWith(204);
                         return [2 /*return*/];
                 }
             });
