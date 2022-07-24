@@ -14,6 +14,7 @@ export default async (req: Request, res: Response, next: NextFunction): Promise<
 
     next();
   } catch (err) {
+    // 401 não autorizado
     throw new HttpException(401, 'Token expirado ou inválido.');
   }
 };

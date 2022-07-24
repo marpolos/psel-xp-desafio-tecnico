@@ -1,0 +1,323 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Psel-xp-2022-v1",
+        "description": "API corretora de ações",
+        "termsOfService": "http://localhost:3002/terms",
+        "contact": {
+            "email": "monteiro.bio@outlook.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        { 
+            "url": "http://localhost:3002/",
+            "description": "Base para testes"
+        },
+        { 
+            "url": "https://psel-xp.herokuapp.com/",
+            "description": "Base para produção"
+        }
+    ],
+    "paths": {
+        "/contas": {
+            "get": {
+                "summary": "Listar todas as contas cadastradas",
+                "description": "A rota retorna todos os clientes cadastrados na base",
+                "tags": ["Contas"],
+                "security": [ { "bearerAuth": [] } ],
+                "responses": {
+                    "401": {
+                        "description": "Token não autorizado"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/conta"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "Sem contas cadastradas"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Criar uma nova conta",
+                "description": "Insere um novo usuário na base de dados",
+                "tags": ["Contas"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/contaCadastrar"
+                            },
+                            "examples": {
+                                "conta": {
+                                    "value": {
+                                        "nome": "Lucky Skywalker",
+                                        "saldo": 50000,
+                                        "senha": "145dfgt"
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuário criado com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "data": {
+                                        "type": "object",
+                                        "properties": {
+                                            "token": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "examples": {
+                                    "data": {
+                                        "value": {
+                                            "token": "ahhhhhhhhhhhhhhhhhhhhhhhhh"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Problema ao gerar token"
+                    },
+                    "400": {
+                        "description": "Não enviou os dados necessários"
+                    },
+                    "406": {
+                        "description": "Dados não aceitos"
+                    }
+                }
+            }
+        },
+        "/contas/{id}": {
+            "get": {
+                "description": "Busca de uma conta pelo id",
+                "summary": "Busca pelo código do cliente",
+                "tags": ["Contas"],
+                "security": [ { "bearerAuth": [] } ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "codCliente",
+                        "required": true
+                    }
+                ],
+                "response": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/conta"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "contas/saque": {
+            "put": {
+                "description": "Realizar um saque na conta do usuário",
+                "summary": "Sacar",
+                "tags": ["Contas"],
+                "security": [ { "bearerAuth": [] } ]
+            }
+        },
+        "/contas/deposito": {
+            "put": {
+                "description": "Realizar um depósito na conta do usuário",
+                "summary": "Depósito",
+                "tags": ["Contas"],
+                "security": [ { "bearerAuth": [] } ]
+            }
+        },
+        "/contas/login": {
+            "post": {
+                "description": "Logar na conta do usuário cadastrado",
+                "summary": "Login",
+                "tags": ["Contas"]
+            }
+        },
+        "/ativos": {
+            "get": {
+                "description": "Busca da lista de ativos disponíveis",
+                "summary": "Lista de ativos",
+                "tags": ["Ativos"],
+                "security": [ { "bearerAuth": [] } ]
+            }
+        },
+        "/ativos/{id}": {
+            "get": {
+                "description": "Busca de um ativo pelo id",
+                "summary": "Encontrar um ativo",
+                "tags": ["Ativos"],
+                "security": [ { "bearerAuth": [] } ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "codAtivo",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/ativos/cliente/{id}": {
+            "get": {
+                "description": "Busca da lista de ativos que um cliente tem",
+                "summary": "Ativos de um cliente",
+                "tags": ["Ativos"],
+                "security": [ { "bearerAuth": [] } ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "codCliente",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        "/investimentos": {
+            "get": {
+                "description": "Busca da lista de todos os investimentos da corretora",
+                "summary": "Lista de investimentos",
+                "tags": ["Investimentos"],
+                "security": [ { "bearerAuth": [] } ]
+            }
+        },
+        "/investimentos/vender": {
+            "put": {
+                "description": "Vender um ativo do cliente",
+                "summary": "Vender ativo",
+                "tags": ["Investimentos"],
+                "security": [ { "bearerAuth": [] } ]
+            }
+        },
+        "/investimentos/comprar": {
+            "put": {
+                "description": "Comprar um ativo para o cliente",
+                "summary": "Comprar ativo",
+                "tags": ["Investimentos"],
+                "security": [ { "bearerAuth": [] } ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "contaCadastrar": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "saldo": {
+                        "type": "number"
+                    },
+                    "senha": {
+                        "type": "string"
+                    }
+                }
+            },
+            "login": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "senha": {
+                        "type": "string"
+                    }
+                }
+            },
+            "conta": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "codCliente": {
+                        "type": "number"
+                    },
+                    "saldo": {
+                        "type": "number"
+                    }
+                }
+            },
+            "saqueDeposito": {
+                "type": "object",
+                "properties": {
+                    "codCliente": {
+                        "type": "number"
+                    },
+                    "saldo": {
+                        "type": "number"
+                    }
+                }
+            },
+            "ativo": {
+                "type": "object",
+                "properties": {
+                    "nome": {
+                        "type": "string"
+                    },
+                    "codAtivo": {
+                        "type": "string"
+                    },
+                    "qtde": {
+                        "type": "number"
+                    },
+                    "valorAtivo": {
+                        "type": "number"
+                    }
+                }
+            },
+            "investimento": {
+                "type": "object",
+                "properties": {
+                    "codCliente": {
+                        "type": "string"
+                    },
+                    "codAtivo": {
+                        "type": "string"
+                    },
+                    "qtde": {
+                        "type": "number"
+                    },
+                    "valorAtivo": {
+                        "type": "number"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

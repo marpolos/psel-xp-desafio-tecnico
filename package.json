@@ -55,7 +55,7 @@
   "scripts": {
     "test:coverage": "npx jest --coverage",
     "test:watch": "npx jest --watch",
-    "mocha": "mocha ./tests/**/*$NAME*.test.js --exit",
+    "test": "npx jest ./src/tests/**/*$NAME*.test.ts",
     "start": "node public/index.js",
     "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --exec ts-node src/index.ts",
     "lint": "eslint. --ext .ts"

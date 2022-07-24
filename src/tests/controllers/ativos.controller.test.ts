@@ -13,9 +13,10 @@ describe('Testa o controller dos ativos', () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       };
+      const mNext = jest.fn();
 
       await ativosController
-        .getAll(mReq as Request, mRes as unknown as Response);
+        .getAll(mReq as unknown as Request, mRes as unknown as Response, mNext as NextFunction);
       expect(mRes.status).toBeCalledWith(200);
       expect(mRes.json).toBeCalled();
     });
@@ -31,7 +32,7 @@ describe('Testa o controller dos ativos', () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       };
-      const mNext = () => {};
+      const mNext = jest.fn();
     
       await ativosController
         .getById(
@@ -87,7 +88,7 @@ describe('Testa o controller dos ativos', () => {
       expect(mRes.status).toBeCalledWith(200);
       expect(mRes.json).toBeCalled();
     });
-    it('Se o cliente não tem ativos retorna um status 204 de no content e uma message', async () => {
+    it('Se o cliente não tem ativos retorna um status 204 e no content', async () => {
       const mReq = {
         query: {},
         params: { id: ID_INVALID },
@@ -104,7 +105,7 @@ describe('Testa o controller dos ativos', () => {
           mRes as unknown as Response,
           mNext as NextFunction,
         );
-      expect(mRes).toBeCalledWith(204);
+      expect(mRes.status).toBeCalledWith(204);
     });
   });
 });

@@ -34,8 +34,10 @@ describe('Testa o controller das contas', () => {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
       };
+
+      const mNext = jest.fn();
       await contasController
-        .getAll(mReq as Request, mRes as unknown as Response);
+        .getAll(mReq as unknown as Request, mRes as unknown as Response, mNext as NextFunction);
       expect(mRes.status).toBeCalledWith(200);
       expect(mRes.json).toBeCalled();
     });
